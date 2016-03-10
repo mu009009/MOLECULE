@@ -59,7 +59,7 @@ function dataLoaded()
 	var lowpercentage = 0.30;
 	
 	//The inital distance for each button from the left to its position
-	var Leftpercentage = 0.3;
+	var Leftpercentage = 0.45;
 	
 	//buttonWidth and Height
 	buttonHeight = document.getElementById('ModulePart').offsetWidth*0.02;
@@ -227,7 +227,21 @@ function dataLoaded()
 //			console.log(document.getElementById(this.id).getAttribute('required'));
 			
 // Describe the Tooltip part------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-			var ToolTip = d3.select("#Tooltip")
+			var ToolTip = d3.select("#ModulePart")
+			.append("svg")
+			.attr("id","Tooltip1")
+			.attr("width",function(){
+				var ToolTipWidth = document.getElementById("ModulePart").offsetWidth*0.25 + "px";
+				return ToolTipWidth;
+			})
+			.attr("height",function(){
+				var ToolTipWidth = document.getElementById("ModulePart").offsetWidth*0.12 + "px";
+				return ToolTipWidth;
+			})
+			.style("background-color","#EFEFEF")
+			.style("opacity",0)
+			.style("position","absolute")
+			.style("z-index","99");
 //			console.log(this);
 			var LeftPosition = this.style.marginLeft.toString();
 			var TopPosition = this.style.marginTop.toString();
@@ -236,9 +250,7 @@ function dataLoaded()
 			LeftPosition = LeftPosition.replace(new RegExp(pattern),"");
 			TopPosition = TopPosition.replace(new RegExp(pattern),"");
 			
-			ToolTip = d3.select("#Tooltip")
-			.transition()
-			.duration(500)			
+			var ToolTipChanging = d3.select("#Tooltip1")
 			.style("margin-left",function(){
 //				var coordinates = [0, 0];
 //				coordinates = d3.mouse(this);
@@ -255,10 +267,12 @@ function dataLoaded()
 //				return y - buttonHeight/2 + "px";
 				var RightTopPosition = +TopPosition;
 				return RightTopPosition  + "px" ;				
-			})
+			})			
+			.transition()
+			.duration(500)			
 			.style("opacity",0.8)
 			
-			var HideText = d3.selectAll("text")
+			var HideText = d3.select("#Tooltip1")
 			.text("");
 			
 			var TipString;
@@ -305,11 +319,15 @@ function dataLoaded()
 //						}	
 				}
 			
-			var text = d3.select("#Tooltip")
+			var text = d3.select("#Tooltip1")
 			.append("text")
 			.attr("x",15)
 			.attr("y",25)
-			.style("font-size",18+"px")
+			.style("font-size",function(){
+				var FontSize = document.getElementById("ModulePart").offsetWidth*0.014 + "px";
+				console.log(FontSize);
+				return FontSize;
+			})
 //			.text(TipString);
 			
 			var NewString = TipString.split(",");
@@ -327,7 +345,7 @@ function dataLoaded()
 //			console.log(ToolTip);			
 		})
 		.on("mouseout",function(){
-			var TipStringII = "Need submit " +  BlueNumber + ",more Blue module" + ",and need submit " + GreenNumber + ",more Green module,in Level "+ (LevelNumber) + ",to unlock,the next Level";
+			var TipStringII = "Need submit " +  BlueNumber + ",more Blue module" + ",and need submit " + GreenNumber + ",more Green module,in Level "+ (LevelNumber) + ",to unlock,the Level " + (LevelNumber+1);
 			var NewString = TipStringII.split(",");
 			
 //			var Hide = d3.select("#Tooltip")
@@ -335,14 +353,49 @@ function dataLoaded()
 //			.duration(500)
 //			.style("opacity",0)
 			
-			var HideText = d3.selectAll("text")
+			var ChangePosition = d3.select('#Tooltip1')
+			.transition()
+			.duration(500)
+			.style("opacity",0)
+			.remove();
+		})
+	
+			var ToolTip2 = d3.select("#ModulePart")
+			.append("svg")
+			.attr("id","Tooltip2")
+			.attr("width",function(){
+				var ToolTipWidth = document.getElementById("ModulePart").offsetWidth*0.20 + "px";
+				return ToolTipWidth;
+			})
+			.attr("height",function(){
+				var ToolTipWidth = document.getElementById("ModulePart").offsetWidth*0.12 + "px";
+				return ToolTipWidth;
+			})
+			.style("background-color","#EFEFEF")
+			.style("opacity",0)
+			.style("position","absolute")
+			.style("z-index","99");	
+	
+			var TipStringII = "Need submit " +  BlueNumber + ",more Blue module" + ",and need submit " + GreenNumber + ",more Green module,in Level "+ (LevelNumber) + ",to unlock,the Level " + (LevelNumber+1);
+			var NewString = TipStringII.split(",");
+			
+//			var Hide = d3.select("#Tooltip")
+//			.transition()
+//			.duration(500)
+//			.style("opacity",0)
+			
+			var HideText = d3.select("#Tooltip2")
 			.text("");
 			
-			var Showagain = d3.select('#Tooltip')
+			var Showagain = d3.select('#Tooltip2')
 			.append("text")
 			.attr("x",15)
 			.attr("y",25)
-			.style("font-size",18+"px")
+			.style("font-size",function(){
+				var FontSize = document.getElementById("ModulePart").offsetWidth*0.014 + "px";
+				console.log(FontSize);
+				return FontSize;				
+			})
 			
 			Showagain.selectAll("tspan")
 			.data(NewString)
@@ -354,13 +407,12 @@ function dataLoaded()
 				return d;
 			});
 			
-			var ChangePosition = d3.select('#Tooltip')
+			var ChangePosition = d3.select('#Tooltip2')
 			.transition()
 			.duration(500)
 			.style("opacity",0.8)
 			.style("margin-left",0+"px")
-			.style("margin-top",0+"px")			
-		})
+			.style("margin-top",0+"px")		
 	
 // Describe the Submit button part and the Restart button part-------------------------------------------------------------------------------------------------------------------------------------------------------------	
 		var SubmitButton = d3.select('#ModulePart')
