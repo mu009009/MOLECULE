@@ -1,6 +1,6 @@
 console.log("Module");
 
-var CourseObject ;
+var CourseObject = null;
 
 //Help put the module into the right place
 var LevelReNumberCount = 0;
@@ -13,17 +13,24 @@ var LevelNumber = 1;
 //Load the data about Module;
 function ModuleDataLoad()
 {
-	queue()
-	.defer(d3.csv,'data/CSV File/LevelInfo.csv',parseLevle)
-	.await(dataLoaded);
+//	queue()
+//	.defer(d3.csv,'data/CSV File/LevelInfo.csv',parseLevle)
+//	.await(dataLoaded);
+	dataLoaded();
 }
 
 //Controling the data-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function dataLoaded(err,Levelinfo)
-{	
+function dataLoaded()
+{
+	//Deletethe the exist btn;
+	DeleteAllbtn();
+	
 	console.log(CourseObject);
 	
-	var LevelInfo = Levelinfo;
+	// initial
+	LevelPassInfo = FindtheMaxLevel(CourseObject);
+	
+//	var LevelInfo = Levelinfo;
 	
 	//Set the Key to record how many module has already been submit and if it match the requirement
 	var KeyBluePass = 0;
@@ -54,15 +61,15 @@ function dataLoaded(err,Levelinfo)
 	//The inital distance for each button from the left to its position
 	var Leftpercentage = 0.3;
 	
-	//The height and the width for button
-	var buttonHeight = 30;
-	var buttonWidth = 30;
-	var SubmitButtonWidth = 50;
-	var SubmitButtonHeight = 30;
+	//buttonWidth and Height
+	buttonHeight = document.getElementById('ModulePart').offsetWidth*0.02;
+	buttonWidth = buttonHeight;
+	SubmitButtonWidth = document.getElementById('ModulePart').offsetWidth*0.04;
+	SubmitButtonHeight = document.getElementById('ModulePart').offsetWidth*0.02;
 	
 	//The blank for each button;
-	var WidthBlank = 1;
-	var HeightBlank = 1;
+	WidthBlank = buttonWidth*0.035;
+	HeightBlank = WidthBlank;
 	
 	//Draw the button with data and describe the click function each button means a module---------------------------------------------------------------------------------------------------------------------------------
 	var DrawButton = Button
@@ -70,6 +77,7 @@ function dataLoaded(err,Levelinfo)
 		.attr("class",function(d){
 			if(d.Required == true)
 				{
+					LevelPassInfo[d.Level-1] = LevelPassInfo[d.Level-1] + 1;
 					return "btn btn-info "+d.Level;//I use the level to discribe the different columns of modules, level 1 is the most left column, and the highest level will be the most right column
 				}
 			else
@@ -139,35 +147,45 @@ function dataLoaded(err,Levelinfo)
 			return ((d.Level-1)*buttonWidth+WidthBlank*(d.Level-1)+Leftpercentage*w)+"px";
 		})
 		.attr("disabled",function(d){
-			for(var i=0;i<LevelInfo.length;i++)
+			
+			//Only the module in level 1 could be selected at first.
+			if(d.Level==1)
 				{
-					if(d.Level==LevelInfo[i].Level)
-						{
-							if(d.Required==true)
-								{
-									if(LevelInfo[i].ReBlueNumber <= KeyBluePass)
-										{
-											return null;
-										}
-									else
-										{
-											return "disabled";//If the module can not be select at first, like need some pre request module or skills, or something other, than, that module will be disabled
-										}	
-								}
-							else
-								{
-									if(LevelInfo[i].ReGreenNumber <= KeyGreenPass)
-										{
-											return null;
-										}
-									else
-										{
-											return "disabled";//If the module can not be select at first, like need some pre request module or skills, or something other, than, that module will be disabled
-										}	
-								}							
-						}
+					return null
 				}
-			return null;
+			else
+				{
+					return "disabled";
+				}
+//			for(var i=0;i<LevelInfo.length;i++)
+//				{
+//					if(d.Level==LevelInfo[i].Level)
+//						{
+//							if(d.Required==true)
+//								{
+//									if(LevelInfo[i].ReBlueNumber <= KeyBluePass)
+//										{
+//											return null;
+//										}
+//									else
+//										{
+//											return "disabled";//If the module can not be select at first, like need some pre request module or skills, or something other, than, that module will be disabled
+//										}	
+//								}
+//							else
+//								{
+//									if(LevelInfo[i].ReGreenNumber <= KeyGreenPass)
+//										{
+//											return null;
+//										}
+//									else
+//										{
+//											return "disabled";//If the module can not be select at first, like need some pre request module or skills, or something other, than, that module will be disabled
+//										}	
+//								}							
+//						}
+//				}
+//			return null;
 		})
 		.style("opacity",function(d){
 			if(this.disabled)
@@ -246,45 +264,45 @@ function dataLoaded(err,Levelinfo)
 			var TipString;
 			if(document.getElementById(this.id).getAttribute('required')=="true")
 				{
-					if(LevelInfo[this.value-1].ReBlueNumber==0)
-						{
-							BlueNumber = (LevelInfo[this.value-1].ReBlueNumber+1 - KeyBluePass);
+//					if(LevelInfo[this.value-1].ReBlueNumber==0)
+//						{
+//							BlueNumber = (LevelInfo[this.value-1].ReBlueNumber+1 - KeyBluePass);
+//							if(BlueNumber<=0)
+//								{
+//									BlueNumber = 0;
+//								}
+//							TipString = "Need submit " +  BlueNumber + ",more Blue module,in Level " + (LevelNumber) + ",to unlock,the next Level";
+//						}
+//					else
+//						{
+							BlueNumber = (LevelPassInfo[this.value-1]-KeyBluePass);
 							if(BlueNumber<=0)
 								{
 									BlueNumber = 0;
 								}
-							TipString = "Need submit " +  BlueNumber + ",more Blue module,in Level " + (LevelNumber) + ",to unlock,the next Level";
-						}
-					else
-						{
-							BlueNumber = (LevelInfo[this.value-1].ReBlueNumber-KeyBluePass);
-							if(BlueNumber<=0)
-								{
-									BlueNumber = 0;
-								}
-							TipString = "Need submit " + BlueNumber + ",more Blue module,in Level " + (LevelNumber) + ",to unlock,the next Level";
-						}					
+							TipString = "Need submit " + BlueNumber + ",more Blue module,in Level " + (LevelNumber) + ",to unlock,the Level " + (LevelNumber+1);
+//						}					
 				}
 			else
 				{
-					if(LevelInfo[this.value-1].ReGreenNumber==0)
-						{
-							GreenNumber = (LevelInfo[this.value-1].ReGreenNumber+1 - KeyGreenPass);
-							if(GreenNumber<=0)
-								{
-									GreenNumber = 0;
-								}
-							TipString = "Need submit " + GreenNumber + ",more Green module,in Level " + (LevelNumber) + ",to unlock,the next Level";
-						}
-					else
-						{
-							GreenNumber = (LevelInfo[this.value-1].ReGreenNumber-KeyGreenPass);
-							if(GreenNumber<=0)
-								{
-									GreenNumber = 0;
-								}							
-							TipString = "Need submit " + GreenNumber + ",more Green module,to unlock,in Level " + (LevelNumber) + ",to unlock,the next Level";
-						}	
+//					if(LevelInfo[this.value-1].ReGreenNumber==0)
+//						{
+//							GreenNumber = (LevelInfo[this.value-1].ReGreenNumber+1 - KeyGreenPass);
+//							if(GreenNumber<=0)
+//								{
+//									GreenNumber = 0;
+//								}
+//							TipString = "Need submit " + GreenNumber + ",more Green module,in Level " + (LevelNumber) + ",to unlock,the next Level";
+//						}
+//					else
+//						{
+//							GreenNumber = (LevelInfo[this.value-1].ReGreenNumber-KeyGreenPass);
+//							if(GreenNumber<=0)
+//								{
+//									GreenNumber = 0;
+//								}							
+							TipString = "This is an" + ",optional module";
+//						}	
 				}
 			
 			var text = d3.select("#Tooltip")
@@ -344,8 +362,6 @@ function dataLoaded(err,Levelinfo)
 			.style("margin-top",0+"px")			
 		})
 	
-	console.log(DrawButton);
-	
 // Describe the Submit button part and the Restart button part-------------------------------------------------------------------------------------------------------------------------------------------------------------	
 		var SubmitButton = d3.select('#ModulePart')
 		.append("button")
@@ -356,10 +372,11 @@ function dataLoaded(err,Levelinfo)
 		.style("width",SubmitButtonWidth + "px")
 		.style("height",SubmitButtonHeight + "px")
 		.style("margin-left",93 + "%")
-		.style("padding-left",1.5+"px")
+		.style("padding-left",SubmitButtonWidth*0.02+"px")
+		.style("padding-top",SubmitButtonHeight*0.2+"px")
 		.style("position","absolute")
 		.text("Submit")
-		.style("font-size",14 + "px")
+		.style("font-size",SubmitButtonHeight * 0.1 + "px")
 		.on("click",function(){
 			
 			console.log(document.getElementById("Module"+PreviousName).getAttribute("submitted"));
@@ -387,15 +404,11 @@ function dataLoaded(err,Levelinfo)
 			.style("opacity",1)
 			
 			if(PreviousSelectLevel>0)
-				{
-							console.log(KeyBluePass);
-							console.log(KeyGreenPass);
-							console.log(LevelInfo[PreviousSelectLevel-1].ReBlueNumber)
-							console.log(LevelInfo[PreviousSelectLevel-1].ReGreenNumber)					
-					if(LevelInfo[PreviousSelectLevel-1].ReBlueNumber <= KeyBluePass)
+				{			
+					if(LevelPassInfo[PreviousSelectLevel-1] <= KeyBluePass)
 						{
-							if(LevelInfo[PreviousSelectLevel-1].ReGreenNumber <= KeyGreenPass)
-								{
+//							if(LevelInfo[PreviousSelectLevel-1].ReGreenNumber <= KeyGreenPass)
+//								{
 										var NameString = ".btn.btn-info"+'.'+(PreviousSelectLevel+1).toString();
 											$(NameString)
 											.attr("disabled",null);
@@ -430,7 +443,7 @@ function dataLoaded(err,Levelinfo)
 
 											KeyBluePass = 0;
 											KeyGreenPass = 0;
-								}
+//								}
 						}
 				}
 		});
@@ -444,14 +457,15 @@ function dataLoaded(err,Levelinfo)
 		.style("width",SubmitButtonWidth + "px")
 		.style("height",SubmitButtonHeight + "px")
 		.style("margin-left",88 + "%")
-		.style("padding-left",1.5+"px")
+		.style("padding-left",SubmitButtonWidth*0.02+"px")
+		.style("padding-top",SubmitButtonHeight*0.2+"px")
 		.style("position","absolute")
 		.text("Restart")
-		.style("font-size",14 + "px")
+		.style("font-size", SubmitButtonHeight * 0.1 + "px")
 		.on("click",function(){
 			window.location.reload();
 		});
-	
+//  console.log(LevelPassInfo);	
 //	console.log(DrawButton[0][0].__data__);
 //	console.log(DrawButton);	
 }
@@ -488,6 +502,12 @@ function parseLevle(d)
 			
 	return ModuleLevel;
 
+}
+
+function DeleteAllbtn()
+{
+	d3.selectAll('.btn')
+	.remove();
 }
 
 

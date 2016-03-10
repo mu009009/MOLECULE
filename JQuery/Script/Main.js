@@ -9,6 +9,19 @@ var marginTopForMidPart = 0.25
 //Judge if the ResourceScreen need to change with the screen;
 var ChangeJudging = 0;
 
+//The height and the width for button
+var buttonHeight = null;
+var buttonWidth = null;
+var SubmitButtonWidth = null;
+var SubmitButtonHeight = null;
+
+//The blank for each button;
+var WidthBlank = null;
+var HeightBlank = null;
+
+//Record the Value of the each level, how many require course in each level
+var LevelPassInfo = null;
+
 //Get the width blank 
 //var WidthBlank = document.getElementById('ProfeilePart').offsetWidth * 0.20;
 var WidthBlank = 0;
@@ -74,11 +87,11 @@ window.onresize = function(){
 	
 		windowHeight = window.innerHeight;
 		
-		//The height of the Mid top part
+		//The height of the Mid top part, Chnage to fit the change of WindowSize
 		d3.select('#ModulePart')
 		.style("height",windowHeight * (marginTopForMidPart - BlankHieght) + "px");
 		
-		//The height of the Mid bottom part
+		//The height of the Mid bottom part, Chnage to fit the change of WindowSize
 	if(ChangeJudging == 0)
 		{
 			d3.select('#ResourceScreen')
@@ -96,4 +109,14 @@ window.onresize = function(){
 			})
 			.style("margin-top",0+"px");			
 		}
+	
+	//Change the size of the profile Part
+	d3.select('#ProfeilePart')
+	.style("height",windowHeight + "px")
+	.style("width",window.innerWidth*0.036 + "px")
+	
+	//Change the size of button;
+	ModuleDataLoad();
+	
+	ProfilePartDraw();
     }
