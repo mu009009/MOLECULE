@@ -1,4 +1,7 @@
 console.log("app");
+
+var CourseObject = null;
+
 (function(){
     $(init);
 //Lymda.com;	
@@ -29,12 +32,8 @@ console.log("app");
 		CourseObject = response;
 //		console.log(apiResponse);
 //		console.log(CourseObject);
-		ModuleDataLoad();
+		ModuleDataLoad(CourseObject);
+		Skillinformation(CourseObject);
     }
     
 })();
-
-function ThoroughData()
-{
-	return CourseObject;
-}

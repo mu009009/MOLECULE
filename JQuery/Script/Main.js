@@ -116,7 +116,8 @@ window.onresize = function(){
 	.style("width",window.innerWidth*0.036 + "px")
 	
 	//Change the size of button;
-	ModuleDataLoad();
+	ModuleDataLoad(CourseObject);
+	Skillinformation(CourseObject);
 	
 	ProfilePartDraw();
     }

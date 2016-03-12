@@ -1,7 +1,5 @@
 console.log("Module");
 
-var CourseObject = null;
-
 //Help put the module into the right place
 var LevelReNumberCount = 0;
 var LevelNoreNumberCount = 0;
@@ -10,17 +8,25 @@ var LevelNoreNumberCount = 0;
 var PreviousLevel = 0;
 var LevelNumber = 1;
 
+//Remember the Level now 
+var PreviousSelectLevel = null;
+var PreviousName = null;
+
+//Time for changing
+var durationTime = null;
+durationTime = 500;
+
 //Load the data about Module;
-function ModuleDataLoad()
+function ModuleDataLoad(CourseObject)
 {
 //	queue()
 //	.defer(d3.csv,'data/CSV File/LevelInfo.csv',parseLevle)
 //	.await(dataLoaded);
-	dataLoaded();
+	dataLoaded(CourseObject);
 }
 
 //Controling the data-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function dataLoaded()
+function dataLoaded(CourseObject)
 {
 	//Deletethe the exist btn;
 	DeleteAllbtn();
@@ -37,8 +43,8 @@ function dataLoaded()
 	var KeyGreenPass = 0;
 	
 	//Remember the Level now 
-	var PreviousSelectLevel = 0;
-	var PreviousName = null;
+	PreviousSelectLevel = null;
+	PreviousName = null;
 	
 	
 	//Require Module number record
@@ -87,7 +93,7 @@ function dataLoaded()
 		})
 		.attr("id",function(d){
 //			console.log(d.rank);
-			return "Module"+d.rank;
+			return "Module"+d.moduleObjectId;
 		})
 		.attr("name",function(d){
 			return d.moduleInfo[0].name;
@@ -157,35 +163,6 @@ function dataLoaded()
 				{
 					return "disabled";
 				}
-//			for(var i=0;i<LevelInfo.length;i++)
-//				{
-//					if(d.Level==LevelInfo[i].Level)
-//						{
-//							if(d.Required==true)
-//								{
-//									if(LevelInfo[i].ReBlueNumber <= KeyBluePass)
-//										{
-//											return null;
-//										}
-//									else
-//										{
-//											return "disabled";//If the module can not be select at first, like need some pre request module or skills, or something other, than, that module will be disabled
-//										}	
-//								}
-//							else
-//								{
-//									if(LevelInfo[i].ReGreenNumber <= KeyGreenPass)
-//										{
-//											return null;
-//										}
-//									else
-//										{
-//											return "disabled";//If the module can not be select at first, like need some pre request module or skills, or something other, than, that module will be disabled
-//										}	
-//								}							
-//						}
-//				}
-//			return null;
 		})
 		.style("opacity",function(d){
 			if(this.disabled)
@@ -203,24 +180,39 @@ function dataLoaded()
 				{
 					PreviousSelectLevel = d.Level;
 				}
-			d3.select('#' + "Module"+d.rank)
+			d3.select('#' + "Module"+d.moduleObjectId)
 			.transition()
-			.duration(500)			
+			.duration(durationTime)			
 			.style("background-color",function(d){
-				if(PreviousName!=d.rank)
+				if(PreviousName!=d.moduleObjectId)
 					{
 						if(PreviousName!=null)
 							{
 								d3.select('#'+"Module"+PreviousName)
 								.transition()
-								.duration(500)
+								.duration(durationTime)
 								.style("background-color",null);
 							}
 //						return "rgb" + "(" +"255,106,106"+ ")"
 						return "white";
 					}
 			});
-			PreviousName = d.rank;			
+			PreviousName = d.moduleObjectId;
+			
+			var SelectName = null;
+			SelectName = d.moduleInfo[0].name;
+			
+			var SelectSkill = null;
+			SelectSkill = d.moduleInfo[0].learningOutcomes;
+			
+			var SelectCourseOutcome = null;
+			SelectCourseOutcome = d.moduleInfo[0].courseOutcome;
+			
+			DeleteText();
+			
+			ModuleInformationDetail(SelectName,SelectCourseOutcome);
+			
+			SkillDetail(SelectName,SelectSkill);
 		})
 		.on("mouseover",function(){
 			
@@ -252,24 +244,16 @@ function dataLoaded()
 			
 			var ToolTipChanging = d3.select("#Tooltip1")
 			.style("margin-left",function(){
-//				var coordinates = [0, 0];
-//				coordinates = d3.mouse(this);
-//				var x = coordinates[0];				
-//				return x+buttonWidth/2 + "px";
 				var RightLeftPosition = +LeftPosition;
 //				console.log(RightLeftPosition);
 				return  RightLeftPosition + buttonWidth + "px" ;
 			})
 			.style("margin-top",function(){
-//				var coordinates = [0, 0];
-//				coordinates = d3.mouse(this);
-//				var y = coordinates[1];				
-//				return y - buttonHeight/2 + "px";
 				var RightTopPosition = +TopPosition;
 				return RightTopPosition  + "px" ;				
 			})			
 			.transition()
-			.duration(500)			
+			.duration(durationTime)			
 			.style("opacity",0.8)
 			
 			var HideText = d3.select("#Tooltip1")
@@ -278,45 +262,16 @@ function dataLoaded()
 			var TipString;
 			if(document.getElementById(this.id).getAttribute('required')=="true")
 				{
-//					if(LevelInfo[this.value-1].ReBlueNumber==0)
-//						{
-//							BlueNumber = (LevelInfo[this.value-1].ReBlueNumber+1 - KeyBluePass);
-//							if(BlueNumber<=0)
-//								{
-//									BlueNumber = 0;
-//								}
-//							TipString = "Need submit " +  BlueNumber + ",more Blue module,in Level " + (LevelNumber) + ",to unlock,the next Level";
-//						}
-//					else
-//						{
-							BlueNumber = (LevelPassInfo[this.value-1]-KeyBluePass);
-							if(BlueNumber<=0)
-								{
-									BlueNumber = 0;
-								}
-							TipString = "Need submit " + BlueNumber + ",more Blue module,in Level " + (LevelNumber) + ",to unlock,the Level " + (LevelNumber+1);
-//						}					
+					BlueNumber = (LevelPassInfo[this.value-1]-KeyBluePass);
+					if(BlueNumber<=0)
+						{
+							BlueNumber = 0;
+						}
+					TipString = "Need submit " + BlueNumber + ",more Blue module,in Level " + (LevelNumber) + ",to unlock,the Level " + (LevelNumber+1);					
 				}
 			else
-				{
-//					if(LevelInfo[this.value-1].ReGreenNumber==0)
-//						{
-//							GreenNumber = (LevelInfo[this.value-1].ReGreenNumber+1 - KeyGreenPass);
-//							if(GreenNumber<=0)
-//								{
-//									GreenNumber = 0;
-//								}
-//							TipString = "Need submit " + GreenNumber + ",more Green module,in Level " + (LevelNumber) + ",to unlock,the next Level";
-//						}
-//					else
-//						{
-//							GreenNumber = (LevelInfo[this.value-1].ReGreenNumber-KeyGreenPass);
-//							if(GreenNumber<=0)
-//								{
-//									GreenNumber = 0;
-//								}							
-							TipString = "This is an" + ",optional module";
-//						}	
+				{							
+					TipString = "This is an" + ",optional module";
 				}
 			
 			var text = d3.select("#Tooltip1")
@@ -355,7 +310,7 @@ function dataLoaded()
 			
 			var ChangePosition = d3.select('#Tooltip1')
 			.transition()
-			.duration(500)
+			.duration(durationTime)
 			.style("opacity",0)
 			.remove();
 		})
@@ -393,7 +348,7 @@ function dataLoaded()
 			.attr("y",25)
 			.style("font-size",function(){
 				var FontSize = document.getElementById("ModulePart").offsetWidth*0.014 + "px";
-				console.log(FontSize);
+//				console.log(FontSize);
 				return FontSize;				
 			})
 			
@@ -409,7 +364,7 @@ function dataLoaded()
 			
 			var ChangePosition = d3.select('#Tooltip2')
 			.transition()
-			.duration(500)
+			.duration(durationTime)
 			.style("opacity",0.8)
 			.style("margin-left",0+"px")
 			.style("margin-top",0+"px")		
@@ -543,19 +498,48 @@ function changeModule(ModuleAddress)
 //	return Module;
 //}
 
-function parseLevle(d)
+//function parseLevle(d)
+//{
+//	var ModuleLevel = {}			
+//
+//	ModuleLevel.Level = +d.Level;
+//	ModuleLevel.ReBlueNumber = +d.BlueRequiredNo;
+//	ModuleLevel.ReGreenNumber = +d.GreenRequiredNo;
+//	ModuleLevel.Des = d.Description;
+//			
+//	return ModuleLevel;
+//
+//}
+
+//Delete those text may cause text overlap----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function DeleteText()
 {
-	var ModuleLevel = {}			
-
-	ModuleLevel.Level = +d.Level;
-	ModuleLevel.ReBlueNumber = +d.BlueRequiredNo;
-	ModuleLevel.ReGreenNumber = +d.GreenRequiredNo;
-	ModuleLevel.Des = d.Description;
+	if(document.getElementById('SelectModuleName'))
+	{
+		d3.select('#SelectModuleName')
+		.remove();
+	}
 			
-	return ModuleLevel;
-
+	if(document.getElementById('SelectModuleSkill'))
+	{
+		d3.select('#SelectModuleSkill')
+		.remove();
+	}
+			
+	if(document.getElementById('RelevantModuleName'))
+	{
+		d3.select('#RelevantModuleName')
+		.remove();
+	}
+			
+	if(document.getElementById('SelectModuleDetail'))
+	{
+		d3.select('#SelectModuleDetail')
+		.remove();
+	}
 }
 
+//Delete those button may cause button overlap------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function DeleteAllbtn()
 {
 	d3.selectAll('.btn')
