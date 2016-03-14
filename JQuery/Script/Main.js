@@ -84,40 +84,52 @@ d3.select('#ResourceScreen')
 
 //Change the size for each part when the Size of window changed.
 window.onresize = function(){
-	
-		windowHeight = window.innerHeight;
-		
-		//The height of the Mid top part, Chnage to fit the change of WindowSize
-		d3.select('#ModulePart')
-		.style("height",windowHeight * (marginTopForMidPart - BlankHieght) + "px");
-		
-		//The height of the Mid bottom part, Chnage to fit the change of WindowSize
-	if(ChangeJudging == 0)
-		{
-			d3.select('#ResourceScreen')
-			.style("margin-top",windowHeight * marginTopForMidPart - BlankHieght +"px")
-			.style("height", windowHeight * (1-marginTopForMidPart) + BlankHieght + "px");			
-		}
-	else if(ChangeJudging == 1)
-		{
-			d3.select('#ResourceScreen')
-			.style("height",windowHeight + "px")
-			.style("width",function()
-			{
-				var newWidth = window.innerWidth*(1-0.036)-2*WidthBlank;
-				return newWidth + "px";
-			})
-			.style("margin-top",0+"px");			
-		}
-	
-	//Change the size of the profile Part
-	d3.select('#ProfeilePart')
-	.style("height",windowHeight + "px")
-	.style("width",window.innerWidth*0.036 + "px")
-	
-	//Change the size of button;
-	ModuleDataLoad(CourseObject);
-	Skillinformation(CourseObject);
-	
-	ProfilePartDraw();
+	window.location.reload()
+//	
+//		windowHeight = window.innerHeight;
+//		
+//		//The height of the Mid top part, Chnage to fit the change of WindowSize
+//		d3.select('#ModulePart')
+//		.style("height",windowHeight * (marginTopForMidPart - BlankHieght) + "px");
+//		
+//		//The height of the Mid bottom part, Chnage to fit the change of WindowSize
+//	if(ChangeJudging == 0)
+//		{
+//			d3.select('#ResourceScreen')
+//			.style("margin-top",windowHeight * marginTopForMidPart - BlankHieght +"px")
+//			.style("height", windowHeight * (1-marginTopForMidPart) + BlankHieght + "px");			
+//		}
+//	else if(ChangeJudging == 1)
+//		{
+//			d3.select('#ResourceScreen')
+//			.style("height",windowHeight + "px")
+//			.style("width",function()
+//			{
+//				var newWidth = window.innerWidth*(1-0.036)-2*WidthBlank;
+//				return newWidth + "px";
+//			})
+//			.style("margin-top",0+"px");			
+//		}
+//	
+//	//Change the size of the profile Part
+//	d3.select('#ProfeilePart')
+//	.style("height",windowHeight + "px")
+//	.style("width",window.innerWidth*0.036 + "px")
+//	
+//	//Change the size of button;
+//	ModuleDataLoad(CourseObject);
+//	Skillinformation();
+//	
+//	RightlineNumber = 1;
+//	RightCirclenumberRecord = 0;
+//	RightCircleMax = 12;
+//	CircleMaxNumberforR = 12;
+//	
+//	DeleteAllcircles();
+//	var SkillArrary = null;
+//	SkillArrary = CreateSkillObject(CourseObject);
+//	DrawCircles(SkillArrary);
+//	
+//	ProfilePartDraw();
+////	ResetSkillarrary(SkillArrary);
     }

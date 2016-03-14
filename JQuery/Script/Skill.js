@@ -1,8 +1,21 @@
 console.log("Skill");
 var FontMargintop = null;
 var FontMarginLeft = null;
+
+var RightlineNumber = null;
+RightlineNumber = 1;
+
+var RightCirclenumberRecord = null;
+RightCirclenumberRecord = 0;
+
+var RightCircleMax = null;
+RightCircleMax = 12;
+
+var CircleMaxNumberforR = null;
+CircleMaxNumberforR = 12;
+
 //Skill part describe the element in Skill part-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function Skillinformation(CourseObject)
+function Skillinformation()
 {
 	FontMargintop = null;
 	FontMarginLeft = null;
@@ -14,8 +27,14 @@ function Skillinformation(CourseObject)
 			DeleteSvg();
 		}
 	
+	if(document.getElementById('Graphicsvg'))
+		{
+			DeleteGraphicSvg();
+		}
+	
 	CreateSvg();
 	CreateModuleSvg();
+	CreateGraphicSvg();
 	FontMarginTopAndLeft();
 	WriteTitle();
 }
@@ -238,4 +257,307 @@ function ModuleInformationDetail(ModuleName,ModuleDetail)
 	.transition()
 	.duration(durationTime)
 	.style("opacity",1);
+}
+
+//Create the Skill graphic part---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Create the svg for this part----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function CreateGraphicSvg()
+{
+	var InforSvg = d3.select('#SkillPart')
+		.append("svg")
+		.attr("id","Graphicsvg")
+		.attr("width",function(){
+			var InforWidth = document.getElementById("SkillPart").offsetWidth*0.96;
+			return InforWidth + "px";
+		})
+		.attr("height",function(){
+			var InforHeight = windowHeight*0.555;
+			return InforHeight + "px";
+		})
+		.style("background-color",null)
+		.style("position","absolute")
+		.style("margin-left",function()
+		{
+			var LeftBlank = document.getElementById("SkillPart").offsetWidth*0.00;
+			return LeftBlank + "px";
+		})
+		.style("margin-top",function()
+		{
+			var TopBlank = windowHeight*0.435;
+			return TopBlank + "px";
+		})
+		.style("overflow","scroll");
+	
+	DrawLines();
+}
+
+//Delete the graphic svg----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function DeleteGraphicSvg()
+{
+	d3.select('#Graphicsvg').remove();
+	return null;
+}
+
+//DrawLines for GraphicSvgPart----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function DrawLines()
+{
+	var Lines1 = d3.select('#Graphicsvg')
+	.append('rect')
+	.attr('x',0)
+	.attr('y',0)
+	.attr('width',function()
+	{
+		var RectWidth = document.getElementById('Graphicsvg').offsetWidth*1;
+		return RectWidth + 'px';
+	})
+	.attr('height',function()
+	{
+		var RectHeigh = document.getElementById('Graphicsvg').offsetHeight*0.005;
+		return RectHeigh + 'px';
+	})
+	.attr('fill','black');
+	
+	var Lines2 = d3.select('#Graphicsvg')
+	.append('rect')
+	.attr('x',function()
+	{
+		var RectWidth = document.getElementById('Graphicsvg').offsetWidth*0.5;
+		return RectWidth + 'px';
+	})
+	.attr('y',0)
+	.attr('width',function()
+	{
+		var RectWidth = document.getElementById('Graphicsvg').offsetWidth*0.005;
+		return RectWidth + 'px';
+	})
+	.attr('height',function()
+	{
+		var RectHeigh = document.getElementById('Graphicsvg').offsetHeight*1;
+		return RectHeigh + 'px';
+	})
+	.attr('fill','black');	
+	
+}
+
+//Draw the graphic circle part----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Create Skill Object-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function CreateSkillObject(CourseObject)
+{
+	var SkillArrary = null;
+	SkillArrary = [{id:null,relevantModuleName:[null],name:null,SkillDetail:null,Learned:false}];
+	for(var i=0;i<CourseObject.length;i++)
+		{
+			for(var j=0;j<CourseObject[i].moduleInfo[0].learningOutcomes.length;j++)
+				{
+					for(var z=0;z<SkillArrary.length;z++)
+						{
+							if(SkillArrary[z].id == CourseObject[i].moduleInfo[0].learningOutcomes[j][0]._id)
+								{
+									SkillArrary[z].relevantModuleName.push(CourseObject[i].moduleObjectId);
+									break;
+								}
+							else if(z==(SkillArrary.length-1))
+								{
+									SkillArrary[z].id = CourseObject[i].moduleInfo[0].learningOutcomes[j][0]._id;
+									SkillArrary[z].relevantModuleName[0] = CourseObject[i].moduleObjectId;
+									SkillArrary[z].name = CourseObject[i].moduleInfo[0].learningOutcomes[j][0].name;
+									SkillArrary[z].SkillDetail = CourseObject[i].moduleInfo[0].learningOutcomes[j][0].skillDetails;
+//									SkillArrary.push({id:CourseObject[i].moduleInfo[0].learningOutcomes[j][0]._id,
+//													  relevantModuleName:[CourseObject[i].moduleInfo[0].name],
+//													  name:CourseObject[i].moduleInfo[0].learningOutcomes[j][0].name,
+//													  SkillDetail:CourseObject[i].moduleInfo[0].learningOutcomes[j][0].skillDetails})
+									SkillArrary.push({id:null,relevantModuleName:[null],name:null,SkillDetail:null,Learned:false});
+									break;
+								}
+						}
+				}
+		}
+//	console.log(SkillArrary);
+	return SkillArrary;
+}
+
+//Draw Circles--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function DrawCircles(SkillArrary)
+{
+//	console.log(SkillArrary);
+	var NewSkillArrary = null;
+	NewSkillArrary = SkillArrary;
+	NewSkillArrary.pop();
+//	console.log(NewSkillArrary);
+	
+	var circleR = null;
+	var topBlank = null;
+	
+	var circleYMaxnumber = null;
+	var circleXMaxnumber = null;
+	
+	var LeftYlineNumber = null;
+	var LeftXlineNumber = null;
+
+	var Yblank = null;
+	var CirclenumberYRecord = null;
+	var CirclenumberXRecord = null;
+	
+	circleYMaxnumber = 12;
+	circleXMaxnumber = 12;
+	
+	topBlank = document.getElementById("Graphicsvg").offsetHeight*0.01;
+	circleR = (document.getElementById("Graphicsvg").offsetHeight-2*topBlank)/(4*circleYMaxnumber-2);
+	LeftYlineNumber = 1;
+	LeftXlineNumber = 1;
+	RightlineNumber = 1;
+	CirclenumberYRecord = 0;
+	CirclenumberXRecord = 0;
+	Yblank = document.getElementById("Graphicsvg").offsetWidth*0.5;
+	
+	var DrawcirclesbyData = null;
+	DrawcirclesbyData = d3.select('#Graphicsvg')
+	.selectAll('circle')
+	.data(NewSkillArrary)
+	.enter();
+	
+	var Circles = null;
+	Circles = DrawcirclesbyData
+	.append('circle')
+	.attr('r',circleR)
+	.attr('cx',function(d){
+		var Cxposition = Yblank - circleR - LeftXlineNumber*circleR - (LeftXlineNumber-1)*2*circleR;
+		CirclenumberXRecord = CirclenumberXRecord + 1;
+		if(CirclenumberXRecord >= circleXMaxnumber)
+			{
+				LeftXlineNumber = LeftXlineNumber + 1;
+//				if(LeftXlineNumber%2==0)
+//					{
+						circleXMaxnumber = circleXMaxnumber - 1;
+//					}
+				CirclenumberXRecord = 0;
+			}
+		return Cxposition;
+	})
+	.attr('cy',function(d){
+		var Cyposition = topBlank + circleR + CirclenumberYRecord*4*circleR + (LeftYlineNumber-1)*2*circleR
+		CirclenumberYRecord = CirclenumberYRecord + 1;
+		if(CirclenumberYRecord >= circleYMaxnumber)
+			{
+				LeftYlineNumber = LeftYlineNumber + 1;
+//				if(LeftYlineNumber%2==0)
+//					{
+						circleYMaxnumber = circleYMaxnumber - 1;
+//					}
+				CirclenumberYRecord = 0;
+			}
+		return Cyposition;
+	})
+	.attr('fill','black')
+	.style('opacity',0.4)
+	.attr('id',function(d){
+		return 'circle' + d.id;
+	})
+	.on('click',function(d)
+	{
+//		console.log(d)
+		var RelvantData = null;
+		RelvantData = d.relevantModuleName;
+		ChangeModuleBtnColor(RelvantData);
+	})
+	
+//	console.log(Circles);
+}
+
+//Delete All circles--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function DeleteAllcircles()
+{
+	d3.select('#Graphicsvg')
+	.selectAll('circle')
+	.remove();
+	return null;
+}
+
+//Change Circle Color-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function ChangeCircleColor(ModuleInfo,ChangeColor)
+{
+	console.log(ModuleInfo);
+	d3.select('#Graphicsvg')
+	.selectAll('circle')
+	.attr('fill','black');
+	
+	for(var i=0;i<ModuleInfo.length;i++)
+		{
+			var selectCircle = ModuleInfo[i][0]._id;
+			d3.select(('#circle'+selectCircle))
+			.transition()
+			.duration(durationTime)
+			.attr('fill',ChangeColor);
+		}
+	
+	return null;
+}
+
+//Check and Change the position of the Circle-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function CheckAndChangeCircle(SkillArrary)
+{
+	for(var i=0;i<SkillArrary.length;i++)
+		{
+			for(var j=0;j<SkillArrary[i].relevantModuleName.length;j++)
+				{
+					console.log(document.getElementById("Module"+SkillArrary[i].relevantModuleName[j]).getAttribute("submitted"));
+					if(document.getElementById("Module"+SkillArrary[i].relevantModuleName[j]).getAttribute("submitted")=="true")
+						{
+							if(SkillArrary[i].Learned == false)
+								{
+									ChangeCirclePosition(SkillArrary[i].id);									
+								}
+							SkillArrary[i].Learned = true;
+							break;
+						}
+				}
+		}
+}
+
+function ChangeCirclePosition(ID)
+{
+	var topBlank = null;
+	topBlank = document.getElementById("Graphicsvg").offsetHeight*0.01;
+	
+	var Yblank = null;
+	Yblank = document.getElementById("Graphicsvg").offsetWidth*0.5;
+	
+	var circleR = null;
+	circleR = (document.getElementById("Graphicsvg").offsetHeight-2*topBlank)/(4*CircleMaxNumberforR-2);
+	
+	d3.select(('#circle'+ ID))
+	.transition()
+	.duration(durationTime)
+	.attr('cx',function()
+	{
+		var Cxposition = Yblank + circleR + RightlineNumber*circleR + (RightlineNumber-1)*2*circleR;
+		return Cxposition;
+	})
+	.attr('cy',function()
+	{
+		var Cyposition = topBlank + circleR + RightCirclenumberRecord*4*circleR + (RightlineNumber-1)*2*circleR
+
+		return Cyposition;	
+	})
+	
+	RightCirclenumberRecord = RightCirclenumberRecord + 1;
+	if(RightCirclenumberRecord>=RightCircleMax)
+		{
+			RightlineNumber = RightlineNumber + 1;
+			RightCirclenumberRecord = 0;
+			RightCircleMax = RightCircleMax - 1;
+		}
+	
+	return null;
+}
+
+//Reset the situation of Skillarrary----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function ResetSkillarrary(SkillArrary)
+{
+	console.log(SkillArrary);
+	for(var i=0;i<SkillArrary.length;i++)
+		{
+			SkillArrary[i].Learned = false;
+		}
+	return null;
 }

@@ -213,6 +213,21 @@ function dataLoaded(CourseObject)
 			ModuleInformationDetail(SelectName,SelectCourseOutcome);
 			
 			SkillDetail(SelectName,SelectSkill);
+			
+			var ModuleInfo = null;
+			ModuleInfo = d.moduleInfo[0].learningOutcomes;
+			
+			var ChangeColor = null;
+			if(d.Required == true)
+				{
+					ChangeColor = "rgb" + '(' + "64,168,245" + ')';
+				}
+			else
+				{
+					ChangeColor = "rgb" + '(' + "122,201,66" + ')';
+				}
+			
+			ChangeCircleColor(ModuleInfo,ChangeColor);
 		})
 		.on("mouseover",function(){
 			
@@ -230,7 +245,8 @@ function dataLoaded(CourseObject)
 				var ToolTipWidth = document.getElementById("ModulePart").offsetWidth*0.12 + "px";
 				return ToolTipWidth;
 			})
-			.style("background-color","#EFEFEF")
+//			.style("background-color","#EFEFEF")
+			.style("background-color","White")
 			.style("opacity",0)
 			.style("position","absolute")
 			.style("z-index","99");
@@ -326,7 +342,8 @@ function dataLoaded(CourseObject)
 				var ToolTipWidth = document.getElementById("ModulePart").offsetWidth*0.12 + "px";
 				return ToolTipWidth;
 			})
-			.style("background-color","#EFEFEF")
+//			.style("background-color","#EFEFEF")
+			.style("background-color","White")			
 			.style("opacity",0)
 			.style("position","absolute")
 			.style("z-index","99");	
@@ -386,7 +403,7 @@ function dataLoaded(CourseObject)
 		.style("font-size",SubmitButtonHeight * 0.1 + "px")
 		.on("click",function(){
 			
-			console.log(document.getElementById("Module"+PreviousName).getAttribute("submitted"));
+//			console.log(document.getElementById("Module"+PreviousName).getAttribute("submitted"));
 			d3.select("#"+"Module"+PreviousName)
 			.attr("Submitted",function(){
 				if(document.getElementById("Module"+PreviousName).getAttribute("submitted")=="false")
@@ -398,7 +415,7 @@ function dataLoaded(CourseObject)
 							}
 						else
 							{
-								console.log(document.getElementById("Module"+PreviousName));
+//								console.log(document.getElementById("Module"+PreviousName));
 								KeyGreenPass = KeyGreenPass + 1;
 								return true;	
 							}
@@ -409,6 +426,11 @@ function dataLoaded(CourseObject)
 					}
 			})
 			.style("opacity",1)
+			
+//			console.log(document.getElementById("Module"+PreviousName).getAttribute("submitted"));
+//			console.log(PreviousName);
+			
+			CheckAndChangeCircle(SkillArrary);
 			
 			if(PreviousSelectLevel>0)
 				{			
@@ -424,7 +446,8 @@ function dataLoaded(CourseObject)
 											$(NameAString)
 											.attr("disabled",null);
 
-											d3.selectAll('.btn')
+											d3.select('#ModulePart')
+											.selectAll('.btn')
 											.style("opacity",function(d){
 //												console.log(this.getAttribute("Submitted"));
 													if(this.getAttribute("submitted")==1)
@@ -433,7 +456,7 @@ function dataLoaded(CourseObject)
 														}
 													else if(this.getAttribute("submitted")=="true")
 														{
-															console.log(this);
+//															console.log(this);
 															return 1;
 														}
 													else if(this.disabled)
@@ -474,7 +497,8 @@ function dataLoaded(CourseObject)
 		});
 //  console.log(LevelPassInfo);	
 //	console.log(DrawButton[0][0].__data__);
-//	console.log(DrawButton);	
+//	console.log(DrawButton);
+//	console.log(Button);
 }
 // End of the Main function------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -542,8 +566,28 @@ function DeleteText()
 //Delete those button may cause button overlap------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function DeleteAllbtn()
 {
-	d3.selectAll('.btn')
+	d3.select('#ModulePart')
+	.selectAll('.btn')
 	.remove();
+}
+
+//Change Module Btn Color---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function ChangeModuleBtnColor(RelevantModule)
+{
+//	console.log(RelevantModule);
+	d3.select('#ModulePart')
+	.selectAll('.btn')
+	.style('background-color',null)
+	
+	for(var i=0;i<RelevantModule.length;i++)
+		{
+			d3.select('#Module'+RelevantModule[i])
+			.transition()
+			.duration(durationTime)
+			.style('background-color','White');
+		}
+	
+	return null;
 }
 
 
