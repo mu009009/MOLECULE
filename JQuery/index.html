@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+	
+	<link href="Molecule.css" rel="stylesheet"/>
+	
+</head>
+	
+<body>
+<!--Maincotainer the whole page-->
+<div class="container" id = "Maincontainer">
+	
+	<!--Left profile Part-->
+	<div class="col-md-1" id="ProfeilePart">
+		<img src="data/Images/1stIcon.png" width = "50%" height="4%" id="First_Button" 
+			 class="ProfileButton1"
+			 style="position: absolute; opacity 0.6; margin-left: 0%;">
+		</img>
+		<img src="data/Images/PhotoIcon.png" width = "62%" height="4.5%" id="Photo" 
+			 class="Photo"
+			 style="position: absolute; opacity 1; margin-left: 0px; margin-top: 70px;">
+		</img>
+		<img src="data/Images/Menue.png" width = "50%" height="4%" id="Menue_Button" 
+			 class="ProfileButton1"
+			 style="position: absolute; opacity 0.6; margin-left: 0%; z-index: 10;">
+		</img>	
+		<img src="data/Images/AnnounceIcon.png" width = "50%" height="4%" id="Announce_Button" 
+			 class="ProfileButton1"
+			 style="position: absolute; opacity 0.6; margin-left: 0%;">
+		</img>	
+	</div>
+	
+	<!--Mid Top Part-->
+	<div class="col-md-2" id="ModulePart">
+	</div>
+	
+	<!--Right Skill Part-->
+	<div class="col-md-3" id="SkillPart">
+	</div>
+	
+	<!-- Mid Bottom Part-->
+	<div class="col-md-4" id="ResourceScreen">
+		
+		<img src="data/Images/bothwayarrow_318-10350.png" width="2%" height"2%" id="Both_arrow" 
+			 style="position: absolute; opacity 0.6; margin-left: 95%; margin-top: 5px;"></img>
+		
+		<iframe src="http://www.northeastern.edu/oepd/demo/AACE6000/m1u1/story.html" width="100%" 
+				height="99.5%" id="moduleDetail">
+		</iframe>
+		
+	</div>
+
+	<img src="data/Images/Menue1Icon.png" id="Menue1" 
+			 class="ProfileButton1"
+			 style="position: absolute; z-index: 0;">
+	</img>
+
+	<img src="data/Images/Menu2Icon.png" id="Menue2" 
+			 class="ProfileButton2"
+			 style="position: absolute; z-index: 0;">
+	</img>
+
+	<img src="data/Images/Menue3Icon.png" id="Menue3" 
+			 class="ProfileButton1"
+			 style="position: absolute; z-index: 0;">
+	</img>
+	
+</div>
+<!-- Resource or Library Scripts -->
+
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="Script/lib/queue/queue.min.js"></script>
+<script src="bower_components/crossfilter/crossfilter.js"></script>
+	
+<!-- Control Scripts-->
+<script src="app.js"></script>
+<script src="Script/Main.js"></script>
+<script src="Script/Module.js"></script>
+<script src="Script/Draw.js"></script>
+<script src="Script/Skill.js"></script>
+<script src="Script/ModuleLevel.js"></script>
+<script src="Script/Profile.js"></script>
+
+</body>
+</html>
