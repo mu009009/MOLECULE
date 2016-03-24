@@ -410,11 +410,13 @@ function dataLoaded(CourseObject)
 		.style("width",SubmitButtonWidth + "px")
 		.style("height",SubmitButtonHeight + "px")
 		.style("margin-left",93 + "%")
-		.style("padding-left",SubmitButtonWidth*0.02+"px")
-		.style("padding-top",SubmitButtonHeight*0.2+"px")
+//		.style("padding-left",SubmitButtonWidth*0.02+"px")
+//		.style("padding-top",SubmitButtonHeight*0.2+"px")
 		.style("position","absolute")
+		.append('text')
+		.attr("text-anchor","middle")
 		.text("Submit")
-		.style("font-size",SubmitButtonHeight * 0.1 + "px")
+		.style("font-size",SubmitButtonHeight * 0.05 + "px")
 		.on("click",function(){
 			
 //			console.log(document.getElementById("Module"+PreviousName).getAttribute("submitted"));
@@ -501,11 +503,13 @@ function dataLoaded(CourseObject)
 		.style("width",SubmitButtonWidth + "px")
 		.style("height",SubmitButtonHeight + "px")
 		.style("margin-left",88 + "%")
-		.style("padding-left",SubmitButtonWidth*0.02+"px")
-		.style("padding-top",SubmitButtonHeight*0.2+"px")
+//		.style("padding-left",SubmitButtonWidth*0.02+"px")
+//		.style("padding-top",SubmitButtonHeight*0.2+"px")
 		.style("position","absolute")
+		.append('text')
 		.text("Restart")
-		.style("font-size", SubmitButtonHeight * 0.1 + "px")
+		.attr("text-anchor","middle")
+		.style("font-size", SubmitButtonHeight * 0.05 + "px")
 		.on("click",function(){
 			window.location.reload();
 		});
