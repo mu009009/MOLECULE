@@ -415,8 +415,13 @@ function dataLoaded(CourseObject)
 		.style("position","absolute")
 		.append('text')
 		.attr("text-anchor","middle")
+		.attr("transform", function()
+		{
+			var StringPosition = "translate(" + 1 + "," + 1 + ")";
+			return StringPosition;
+		})		
 		.text("Submit")
-		.style("font-size",SubmitButtonHeight * 0.05 + "px")
+		.style("font-size",SubmitButtonHeight * 0.3 + "px")
 		.on("click",function(){
 			
 //			console.log(document.getElementById("Module"+PreviousName).getAttribute("submitted"));
@@ -509,7 +514,12 @@ function dataLoaded(CourseObject)
 		.append('text')
 		.text("Restart")
 		.attr("text-anchor","middle")
-		.style("font-size", SubmitButtonHeight * 0.05 + "px")
+		.attr("transform", function()
+		{
+			var StringPosition = "translate(" + 1 + "," + 1 + ")";
+			return StringPosition;
+		})			
+		.style("font-size", SubmitButtonHeight * 0.3 + "px")
 		.on("click",function(){
 			window.location.reload();
 		});
