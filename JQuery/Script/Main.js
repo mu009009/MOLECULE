@@ -10,7 +10,7 @@ var marginTopForMidPart = 0.25
 var ChangeJudging = 0;
 
 //The height and the width for button
-var buttonHeight = null;
+//var buttonHeight = null;
 var buttonWidth = null;
 var SubmitButtonWidth = null;
 var SubmitButtonHeight = null;
