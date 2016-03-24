@@ -23,6 +23,7 @@ function ModuleDataLoad(CourseObject)
 //	.defer(d3.csv,'data/CSV File/LevelInfo.csv',parseLevle)
 //	.await(dataLoaded);
 	dataLoaded(CourseObject);
+	return null;
 }
 
 //Controling the data-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -68,14 +69,21 @@ function dataLoaded(CourseObject)
 	var Leftpercentage = 0.45;
 	
 	//buttonWidth and Height
-	buttonHeight = document.getElementById('ModulePart').offsetWidth*0.02;
-	buttonWidth = buttonHeight;
+	buttonWidth = document.getElementById('ModulePart').offsetWidth*0.02;
+//	buttonWidth = buttonHeight;
 	SubmitButtonWidth = document.getElementById('ModulePart').offsetWidth*0.04;
 	SubmitButtonHeight = document.getElementById('ModulePart').offsetWidth*0.02;
 	
 	//The blank for each button;
-	WidthBlank = buttonWidth*0.035;
-	HeightBlank = WidthBlank;
+	WidthBlank = buttonWidth*0.05;
+//	console.log(WidthBlank);
+//	if(WidthBlank<2)
+//		{
+//			WidthBlank = 2;
+//		}
+	HeightBlank = buttonWidth*0.1;
+//	WidthBlank = 0;
+//	HeightBlank = 0;
 	
 	//Draw the button with data and describe the click function each button means a module---------------------------------------------------------------------------------------------------------------------------------
 	var DrawButton = Button
@@ -108,8 +116,8 @@ function dataLoaded(CourseObject)
 		.attr("value",function(d){
 			return +d.Level;
 		})
-		.style("width",buttonWidth + "px")
-		.style("height",buttonHeight + "px")
+		.style("width",(buttonWidth) + "px")
+		.style("height",(buttonWidth) + "px")
 		.style("position","absolute")
 		.style("margin-top",function(d){
 			if(d.Required==true)//Required is the attribution which will discribe if this module is elective or obligatory, obligatory means the true, and elective means the faluse
@@ -119,13 +127,13 @@ function dataLoaded(CourseObject)
 							LevelNoreNumberCount = 0;
 							LevelReNumberCount = 0;
 							PreviousLevel = d.Level;
-							var WidthBlankValue = (h*lowpercentage - LevelReNumberCount*buttonHeight)
+							var WidthBlankValue = (h*lowpercentage - LevelReNumberCount*(buttonWidth))
 							LevelReNumberCount = LevelReNumberCount + 1;
 							return WidthBlankValue + "px";
 						}
 					else
 						{
-							var WidthBlankValue = (h*lowpercentage - LevelReNumberCount*buttonHeight - HeightBlank );
+							var WidthBlankValue = (h*lowpercentage - LevelReNumberCount*(buttonWidth) - HeightBlank );
 							LevelReNumberCount = LevelReNumberCount + 1;
 							return WidthBlankValue + "px";							
 						}
@@ -137,20 +145,20 @@ function dataLoaded(CourseObject)
 							LevelReNumberCount = 0;
 							LevelNoreNumberCount = 0;
 							PreviousLevel = d.Level
-							var HeightBlankValue = (h*lowpercentage + (LevelNoreNumberCount+1)*buttonHeight)
+							var HeightBlankValue = (h*lowpercentage + (LevelNoreNumberCount+1)*(buttonWidth) + HeightBlank * (LevelNoreNumberCount+1));
 							LevelNoreNumberCount = LevelNoreNumberCount + 1;
 							return HeightBlankValue + "px";
 						}
 					else
 						{
-							var HeightBlankValue = (h*lowpercentage + (LevelNoreNumberCount+1)*buttonHeight + HeightBlank * (LevelNoreNumberCount+1));
+							var HeightBlankValue = (h*lowpercentage + (LevelNoreNumberCount+1)*(buttonWidth) + HeightBlank * (LevelNoreNumberCount+1));
 							LevelNoreNumberCount = LevelNoreNumberCount + 1;
 							return  HeightBlankValue + "px";							
 						}
 				}
 		})
 		.style("margin-left",function(d){
-			return ((d.Level-1)*buttonWidth+WidthBlank*(d.Level-1)+Leftpercentage*w)+"px";
+			return ((d.Level-1)*(buttonWidth)+(d.Level-1)*WidthBlank+Leftpercentage*w)+"px";
 		})
 		.attr("disabled",function(d){
 			
@@ -345,7 +353,7 @@ function dataLoaded(CourseObject)
 				return ToolTipWidth;
 			})
 			.attr("height",function(){
-				var ToolTipWidth = document.getElementById("ModulePart").offsetWidth*0.12 + "px";
+				var ToolTipWidth = document.getElementById("ModulePart").offsetWidth*0.15 + "px";
 				return ToolTipWidth;
 			})
 //			.style("background-color","#EFEFEF")

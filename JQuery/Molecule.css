@@ -116,6 +116,11 @@ html,body{
   // Safari fix
   overflow: inherit;
 }
+.btn{
+/*	border: 1px;*/
+/*	border-radius: 0px;*/
+	padding: 0px 0px;
+}
 .btn-info{
 	background-color: rgb(64,168,245);
 }
