@@ -176,6 +176,11 @@ function dataLoaded(CourseObject)
 		})	
 		.on("click",function(d){
 			changeModule(d.moduleInfo[0].link);
+			d3.select('#ModulePart')
+			.selectAll('.btn')
+			.transition()
+			.duration(durationTime)
+			.style("background-color",null);			
 			if(PreviousSelectLevel < d.Level)
 				{
 					PreviousSelectLevel = d.Level;
@@ -188,12 +193,13 @@ function dataLoaded(CourseObject)
 					{
 						if(PreviousName!=null)
 							{
-								d3.select('#'+"Module"+PreviousName)
-								.transition()
-								.duration(durationTime)
-								.style("background-color",null);
+//								d3.select('#'+"Module"+PreviousName)
 							}
 //						return "rgb" + "(" +"255,106,106"+ ")"
+						return "white";
+					}
+				else
+					{
 						return "white";
 					}
 			});

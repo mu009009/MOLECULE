@@ -19,7 +19,6 @@ var SkillArrary = null;
 
     function getData() {
         
-
         $.get({
             url:WEBSERVICE_URL,
             success: renderSearchResults 

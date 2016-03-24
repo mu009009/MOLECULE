@@ -539,6 +539,7 @@ function ChangeCirclePosition(ID)
 
 		return Cyposition;	
 	})
+	.style("opacity",1);
 	
 	RightCirclenumberRecord = RightCirclenumberRecord + 1;
 	if(RightCirclenumberRecord>=RightCircleMax)
