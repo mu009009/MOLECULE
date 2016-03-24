@@ -417,11 +417,11 @@ function dataLoaded(CourseObject)
 		.attr("text-anchor","middle")
 		.attr("transform", function()
 		{
-			var StringPosition = "translate(" + 1 + "," + 1 + ")";
+			var StringPosition = "translate(" + 0 + "," + 0 + ")";
 			return StringPosition;
 		})		
 		.text("Submit")
-		.style("font-size",SubmitButtonHeight * 0.3 + "px")
+		.style("font-size",SubmitButtonHeight * 0.5 + "px")
 		.on("click",function(){
 			
 //			console.log(document.getElementById("Module"+PreviousName).getAttribute("submitted"));
@@ -516,10 +516,10 @@ function dataLoaded(CourseObject)
 		.attr("text-anchor","middle")
 		.attr("transform", function()
 		{
-			var StringPosition = "translate(" + 1 + "," + 1 + ")";
+			var StringPosition = "translate(" + 0 + "," + 0 + ")";
 			return StringPosition;
 		})			
-		.style("font-size", SubmitButtonHeight * 0.3 + "px")
+		.style("font-size", SubmitButtonHeight * 0.5 + "px")
 		.on("click",function(){
 			window.location.reload();
 		});
