@@ -363,10 +363,6 @@ function CreateSkillObject(CourseObject)
 									SkillArrary[z].relevantModuleName[0] = CourseObject[i].moduleObjectId;
 									SkillArrary[z].name = CourseObject[i].moduleInfo[0].learningOutcomes[j][0].name;
 									SkillArrary[z].SkillDetail = CourseObject[i].moduleInfo[0].learningOutcomes[j][0].skillDetails;
-//									SkillArrary.push({id:CourseObject[i].moduleInfo[0].learningOutcomes[j][0]._id,
-//													  relevantModuleName:[CourseObject[i].moduleInfo[0].name],
-//													  name:CourseObject[i].moduleInfo[0].learningOutcomes[j][0].name,
-//													  SkillDetail:CourseObject[i].moduleInfo[0].learningOutcomes[j][0].skillDetails})
 									SkillArrary.push({id:null,relevantModuleName:[null],name:null,SkillDetail:null,Learned:false});
 									break;
 								}
@@ -420,6 +416,7 @@ function DrawCircles(SkillArrary)
 	var Circles = null;
 	Circles = DrawcirclesbyData
 	.append('circle')
+	.attr('class','circle')
 	.attr('r',circleR)
 	.attr('cx',function(d){
 		var Cxposition = Yblank - circleR - LeftXlineNumber*circleR - (LeftXlineNumber-1)*2*circleR;
@@ -459,6 +456,16 @@ function DrawCircles(SkillArrary)
 //		console.log(d)
 		var RelvantData = null;
 		RelvantData = d.relevantModuleName;
+		d3.select('#Graphicsvg')
+		.selectAll('circle')
+		.transition()
+		.duration(durationTime)
+		.style('fill','black');
+		
+		d3.select(this)
+		.transition()
+		.duration(durationTime)
+		.style('fill','rgb'+'('+'135,135,135'+')');
 		ChangeModuleBtnColor(RelvantData);
 	})
 	
