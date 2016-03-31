@@ -69,18 +69,13 @@ function dataLoaded(CourseObject)
 	var Leftpercentage = 0.45;
 	
 	//buttonWidth and Height
-	buttonWidth = document.getElementById('ModulePart').offsetWidth*0.02;
+	buttonWidth = document.getElementById('ModulePart').offsetWidth*0.025;
 //	buttonWidth = buttonHeight;
-	SubmitButtonWidth = document.getElementById('ModulePart').offsetWidth*0.04;
-	SubmitButtonHeight = document.getElementById('ModulePart').offsetWidth*0.02;
+	SubmitButtonWidth = document.getElementById('ModulePart').offsetWidth*0.06;
+	SubmitButtonHeight = document.getElementById('ModulePart').offsetWidth*0.03;
 	
 	//The blank for each button;
 	WidthBlank = buttonWidth*0.05;
-//	console.log(WidthBlank);
-//	if(WidthBlank<2)
-//		{
-//			WidthBlank = 2;
-//		}
 	HeightBlank = buttonWidth*0.1;
 //	WidthBlank = 0;
 //	HeightBlank = 0;
@@ -409,9 +404,11 @@ function dataLoaded(CourseObject)
 		.attr("submitted",1)	
 		.style("width",SubmitButtonWidth + "px")
 		.style("height",SubmitButtonHeight + "px")
-		.style("margin-left",93 + "%")
-//		.style("padding-left",SubmitButtonWidth*0.02+"px")
-//		.style("padding-top",SubmitButtonHeight*0.2+"px")
+		.style("margin-left",function()
+		{
+			var LeftDistence = document.getElementById('ModulePart').offsetWidth - 1.5*SubmitButtonWidth;
+			return LeftDistence + 'px';
+		})
 		.style("position","absolute")
 		.append('text')
 		.attr("text-anchor","middle")
@@ -507,9 +504,11 @@ function dataLoaded(CourseObject)
 		.attr("submitted",1)
 		.style("width",SubmitButtonWidth + "px")
 		.style("height",SubmitButtonHeight + "px")
-		.style("margin-left",88 + "%")
-//		.style("padding-left",SubmitButtonWidth*0.02+"px")
-//		.style("padding-top",SubmitButtonHeight*0.2+"px")
+		.style("margin-left",function()
+		{
+			var LeftDistence = document.getElementById('ModulePart').offsetWidth - 3*SubmitButtonWidth;
+			return LeftDistence + 'px';
+		})
 		.style("position","absolute")
 		.append('text')
 		.text("Restart")
@@ -521,12 +520,9 @@ function dataLoaded(CourseObject)
 		})			
 		.style("font-size", SubmitButtonHeight * 0.5 + "px")
 		.on("click",function(){
+			console.log('Yes');
 			window.location.reload();
 		});
-//  console.log(LevelPassInfo);	
-//	console.log(DrawButton[0][0].__data__);
-//	console.log(DrawButton);
-//	console.log(Button);
 }
 // End of the Main function------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -535,33 +531,6 @@ function changeModule(ModuleAddress)
 {
 	document.getElementById("moduleDetail").src = ModuleAddress;
 }
-
-// Change data to the Object-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//function parse(d)
-//{
-//	var Module = {}
-//	
-//	Module.Level = +d.Level;
-//	Module.Link = d.Resource;
-//	Module.Name = d.ModuleName;
-//	Module.Id = +d.ModuleID;
-//	Module.Required = d.Required;
-//	
-//	return Module;
-//}
-
-//function parseLevle(d)
-//{
-//	var ModuleLevel = {}			
-//
-//	ModuleLevel.Level = +d.Level;
-//	ModuleLevel.ReBlueNumber = +d.BlueRequiredNo;
-//	ModuleLevel.ReGreenNumber = +d.GreenRequiredNo;
-//	ModuleLevel.Des = d.Description;
-//			
-//	return ModuleLevel;
-//
-//}
 
 //Delete those text may cause text overlap----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function DeleteText()
