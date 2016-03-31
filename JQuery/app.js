@@ -7,7 +7,7 @@ var SkillArrary = null;
     $(init);
 //Lymda.com;	
 // http://molecule-neucourse.rhcloud.com/rest/course
-    var WEBSERVICE_URL = "http://molecule-neucourse.rhcloud.com/rest/module";
+    var WEBSERVICE_URL = "http://molecule-neucourse.rhcloud.com/api/project/courseExtendedInfo/56cf02d55ae56c248a00000f";
 	var apiResponse = null;
 
     function init() 
