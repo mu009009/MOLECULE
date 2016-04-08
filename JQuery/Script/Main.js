@@ -34,7 +34,7 @@ var OldWidth = document.getElementById('ResourceScreen').offsetWidth;
 
 //Set the inital height of the Mid top part;
 d3.select('#ModulePart')
-.style("height",windowHeight * (marginTopForMidPart) + "px");
+.style("height",ScreenUnitHeight*25 + "px");
 
 d3.select('#Both_arrow')
 .on("click",function(){
@@ -42,10 +42,10 @@ d3.select('#Both_arrow')
 	if(ChangeJudging == 0)
 		{
 			d3.select('#ResourceScreen')
-			.style("height",windowHeight + "px")
+			.style("height",ScreenUnitHeight*100 + "px")
 			.style("width",function()
 			{
-				var newWidth = window.innerWidth*(1)-2*WidthBlank;
+				var newWidth = ScreenUnitWith*100;
 				return newWidth + "px";
 			})
 			.style("margin-top",0+"px");
@@ -54,20 +54,20 @@ d3.select('#Both_arrow')
 	else if(ChangeJudging == 1)
 		{
 			d3.select('#ResourceScreen')
-			.style("height", windowHeight * (1-marginTopForMidPart) - BlankHieght + "px")
+			.style("height", ScreenUnitHeight * 75 + "px")
 			.style("width",function()
 			{
 				return OldWidth + "px";
 			})
-			.style("margin-top",windowHeight * marginTopForMidPart + BlankHieght +"px");
+			.style("margin-top",ScreenUnitHeight * 25 + "px");
 			ChangeJudging = 0;			
 		}
 })
 
 //Set the inital height of the Mid bottom part;
 d3.select('#ResourceScreen')
-.style("margin-top",windowHeight * (marginTopForMidPart) + BlankHieght +"px")
-.style("height", windowHeight * (1-marginTopForMidPart) - BlankHieght+ "px");
+.style("margin-top",ScreenUnitHeight * 25 + "px")
+.style("height", ScreenUnitHeight * 75 + "px");
 
 //Change the size for each part when the Size of window changed.
 window.onresize = function(){

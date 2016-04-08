@@ -64,7 +64,7 @@ function CreateSvg()
 		.style("margin-top",function()
 		{
 			var TopBlank = windowHeight*0.25;
-			return TopBlank + "px";
+			return 0.35*TopBlank + "px";
 		})
 		.style("overflow","scroll");
 }
@@ -80,7 +80,7 @@ function CreateModuleSvg()
 			return InforWidth + "px";
 		})
 		.attr("height",function(){
-			var InforHeight = windowHeight*0.18;
+			var InforHeight = windowHeight*0.20;
 			return InforHeight + "px";
 		})
 		.style("background-color",null)
@@ -92,7 +92,7 @@ function CreateModuleSvg()
 		})
 		.style("margin-top",function()
 		{
-			var TopBlank = windowHeight*0.05;
+			var TopBlank = windowHeight*0.03;
 			return TopBlank + "px";
 		})
 		.style("overflow","scroll");
@@ -167,11 +167,16 @@ function SkillDetail(ModuleName,SkillDetail)
 		return FontSize + "px";
 	});
 	
+	console.log(SkillDetail);
+	
 	var SkillDesString = null;
 	SkillDesString = "";
 	for(var i=0;i<SkillDetail.length;i++)
 		{
-			SkillDesString = SkillDesString + SkillDetail[i][0].name + ",";
+			for(var j=0;j<SkillDetail[i][0].skillDetails.length;j++)
+				{
+					SkillDesString = SkillDesString + SkillDetail[i][0].skillDetails[j].skill + ",";
+				}
 		}
 	
 //	console.log(SkillDesString);
@@ -197,6 +202,8 @@ function SkillDetail(ModuleName,SkillDetail)
 //Module Detail Information------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ModuleInformationDetail(ModuleName,ModuleDetail)
 {
+	console.log(ModuleName);
+	console.log(ModuleDetail);
 	//Module describtion detail part----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //	console.log(ModuleName)
 	var ModuleDes = null;
@@ -204,7 +211,7 @@ function ModuleInformationDetail(ModuleName,ModuleDetail)
 	.append('text')
 	.attr("id","RelevantModuleName")
 	.attr("x",FontMarginLeft)
-	.attr("y",2*FontMargintop)
+	.attr("y",0.4*FontMargintop)
 	.text(function(){
 		if(ModuleName!=null)
 			{
@@ -229,7 +236,7 @@ function ModuleInformationDetail(ModuleName,ModuleDetail)
 	.append('text')
 	.attr("id","SelectModuleDetail")
 	.attr("x",FontMarginLeft)
-	.attr("y",2.5*FontMargintop)
+	.attr("y",0.8*FontMargintop)
 	.style("font-size",function(){
 		var FontSize = document.getElementById("ModuleInfosvg").offsetWidth*0.02;
 		return FontSize + "px";
@@ -260,6 +267,71 @@ function ModuleInformationDetail(ModuleName,ModuleDetail)
 	.style("opacity",1);
 }
 
+//Skill information Detail--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function SkillInformationDetail(Skill)
+{
+	console.log(Skill);
+	var SkillDes = null;
+	SkillDes = d3.select('#ModuleInfosvg')
+	.append('text')
+	.attr("id","RelevantModuleName")
+	.attr("x",FontMarginLeft)
+	.attr("y",3.4 *FontMargintop)
+	.text(function(){
+		if(Skill.name!=null)
+			{
+				return Skill.name ;
+			}
+		else
+			{
+				return "";
+			}
+	})
+	.style("font-size",function(){
+		var FontSize = document.getElementById("ModuleInfosvg").offsetWidth*0.02;
+		return FontSize + "px";
+	})
+	.style("opacity",0)
+	.transition()
+	.duration(durationTime)
+	.style("opacity",1);
+	
+	var SkillDetailDes = null;
+	SkillDetailDes = d3.select('#ModuleInfosvg')
+	.append('text')
+	.attr("id","SelectModuleDetail")
+	.attr("x",FontMarginLeft)
+	.attr("y",3.8*FontMargintop)
+	.style("font-size",function(){
+		var FontSize = document.getElementById("ModuleInfosvg").offsetWidth*0.02;
+		return FontSize + "px";
+	});
+	
+	var SkillDesString = null;
+	SkillDesString = "";
+	for(var i=0;i<Skill.SkillDetail.length;i++)
+		{
+			SkillDesString = SkillDesString + Skill.SkillDetail[i].skill + ",";
+		}
+	
+	var NewSkillDesString = null;
+	NewSkillDesString = SkillDesString.split(",");
+	
+	SkillDetailDes.selectAll("tspan")
+	.data(NewSkillDesString)
+	.enter()
+	.append("tspan")
+	.attr("x",FontMarginLeft)
+	.attr("dy","1.5em")
+	.text(function(d){
+		return d;
+	})
+	.style("opacity",0)
+	.transition()
+	.duration(durationTime)
+	.style("opacity",1);
+}
+
 //Create the Skill graphic part---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Create the svg for this part----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function CreateGraphicSvg()
@@ -272,7 +344,7 @@ function CreateGraphicSvg()
 			return InforWidth + "px";
 		})
 		.attr("height",function(){
-			var InforHeight = windowHeight*0.555;
+			var InforHeight = windowHeight*0.740;
 			return InforHeight + "px";
 		})
 		.style("background-color",null)
@@ -284,7 +356,7 @@ function CreateGraphicSvg()
 		})
 		.style("margin-top",function()
 		{
-			var TopBlank = windowHeight*0.435;
+			var TopBlank = windowHeight*0.250;
 			return TopBlank + "px";
 		})
 		.style("overflow","scroll");
@@ -453,20 +525,23 @@ function DrawCircles(SkillArrary)
 	})
 	.on('click',function(d)
 	{
-//		console.log(d)
 		var RelvantData = null;
 		RelvantData = d.relevantModuleName;
-		d3.select('#Graphicsvg')
-		.selectAll('circle')
-		.transition()
-		.duration(durationTime)
-		.style('fill','black');
+		ChangeModuleBtnColor(RelvantData);
+		
+		console.log(d3.select(this).style.fill)
+		
+		ChangeCircleColorBack();
 		
 		d3.select(this)
 		.transition()
 		.duration(durationTime)
 		.style('fill','rgb'+'('+'135,135,135'+')');
-		ChangeModuleBtnColor(RelvantData);
+		
+		DeleteText();
+		
+		SkillInformationDetail(d);
+
 	})
 	
 //	console.log(Circles);
@@ -477,26 +552,42 @@ function DrawCircles(SkillArrary)
 function DeleteAllcircles()
 {
 	d3.select('#Graphicsvg')
-	.selectAll('circle')
+	.selectAll('.circle')
 	.remove();
+	return null;
+}
+
+//Change circle data to default---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function ChangeCircleColorBack()
+{
+//	d3.select('#Graphicsvg')
+//	.selectAll('circle')
+//	.style('fill','black');
+	
+	var Circles = document.getElementsByTagName('circle');
+	console.log(Circles);
+	for(var i=0;i<Circles.length;i++)
+		{
+			Circles[i].style.fill = 'black';
+		}
+	
 	return null;
 }
 
 //Change Circle Color-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ChangeCircleColor(ModuleInfo,ChangeColor)
 {
-	console.log(ModuleInfo);
-	d3.select('#Graphicsvg')
-	.selectAll('circle')
-	.attr('fill','black');
+	ChangeCircleColorBack();
 	
 	for(var i=0;i<ModuleInfo.length;i++)
 		{
 			var selectCircle = ModuleInfo[i][0]._id;
-			d3.select(('#circle'+selectCircle))
-			.transition()
-			.duration(durationTime)
-			.attr('fill',ChangeColor);
+//			console.log('#circle'+selectCircle)
+			document.getElementById('circle'+selectCircle).style.fill = ChangeColor;
+//			d3.select(('#circle'+selectCircle))
+//			.transition()
+//			.duration(durationTime)
+//			.attr('fill',ChangeColor);
 		}
 	
 	return null;

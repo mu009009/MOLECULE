@@ -69,10 +69,10 @@ function dataLoaded(CourseObject)
 	var Leftpercentage = 0.45;
 	
 	//buttonWidth and Height
-	buttonWidth = document.getElementById('ModulePart').offsetWidth*0.025;
+	buttonWidth = ScreenUnitWith * 2;
 //	buttonWidth = buttonHeight;
-	SubmitButtonWidth = document.getElementById('ModulePart').offsetWidth*0.06;
-	SubmitButtonHeight = document.getElementById('ModulePart').offsetWidth*0.03;
+	SubmitButtonWidth = ScreenUnitWith * 4;
+	SubmitButtonHeight = ScreenUnitWith * 2;
 	
 	//The blank for each button;
 	WidthBlank = buttonWidth*0.05;
@@ -165,6 +165,17 @@ function dataLoaded(CourseObject)
 			else
 				{
 					return "disabled";
+				}
+		})
+		.attr("ifclick",function(d)
+		{
+			if(d.Level==1)
+				{
+					return true
+				}
+			else
+				{
+					return false;
 				}
 		})
 		.style("opacity",function(d){
@@ -479,11 +490,11 @@ function dataLoaded(CourseObject)
 														}
 													else if(this.disabled)
 														{
-															return 0.2;
+															return 0.3;
 														}
 													else if(!this.disabled)
 														{
-															return 0.5;
+															return 0.7;
 														}
 														})
 											
