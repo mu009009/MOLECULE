@@ -3,6 +3,12 @@ console.log("app");
 var CourseObject = null;
 var SkillArrary = null;
 
+var ScreenUnitWith = null;
+var ScreenUnitHeight = null;
+
+ScreenUnitWith = window.innerWidth*0.01;
+ScreenUnitHeight = window.innerHeight*0.01;
+
 (function(){
     $(init);
 //Lymda.com;	
