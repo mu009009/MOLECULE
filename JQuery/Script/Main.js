@@ -48,7 +48,8 @@ d3.select('#Both_arrow')
 				var newWidth = ScreenUnitWith*100;
 				return newWidth + "px";
 			})
-			.style("margin-top",0+"px");
+			.style("margin-top",0+"px")
+			.style("margin-left",0+"%");
 			ChangeJudging = 1;
 		}
 	else if(ChangeJudging == 1)
@@ -59,7 +60,8 @@ d3.select('#Both_arrow')
 			{
 				return OldWidth + "px";
 			})
-			.style("margin-top",ScreenUnitHeight * 25 + "px");
+			.style("margin-top",ScreenUnitHeight * 25 + "px")
+			.style("margin-left",3.6+"%");
 			ChangeJudging = 0;			
 		}
 })

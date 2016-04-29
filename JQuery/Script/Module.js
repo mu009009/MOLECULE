@@ -303,7 +303,7 @@ function dataLoaded(CourseObject)
 						{
 							BlueNumber = 0;
 						}
-					TipString = "Need submit " + BlueNumber + ",more Blue module,in Level " + (LevelNumber) + ",to unlock,the Level " + (LevelNumber+1);					
+					TipString = "Need to submit " + BlueNumber + ",more Blue module,in Level " + (LevelNumber) + ",to unlock,the Level " + (LevelNumber+1);					
 				}
 			else
 				{							
@@ -336,7 +336,7 @@ function dataLoaded(CourseObject)
 //			console.log(ToolTip);			
 		})
 		.on("mouseout",function(){
-			var TipStringII = "Need submit " +  BlueNumber + ",more Blue module" + ",and need submit " + GreenNumber + ",more Green module,in Level "+ (LevelNumber) + ",to unlock,the Level " + (LevelNumber+1);
+			var TipStringII = "Need to submit " +  BlueNumber + ",more Blue module" + ",and need submit " + GreenNumber + ",more Green module,in Level "+ (LevelNumber) + ",to unlock,the Level " + (LevelNumber+1);
 			var NewString = TipStringII.split(",");
 			
 //			var Hide = d3.select("#Tooltip")
@@ -355,7 +355,7 @@ function dataLoaded(CourseObject)
 			.append("svg")
 			.attr("id","Tooltip2")
 			.attr("width",function(){
-				var ToolTipWidth = document.getElementById("ModulePart").offsetWidth*0.20 + "px";
+				var ToolTipWidth = document.getElementById("ModulePart").offsetWidth*0.30 + "px";
 				return ToolTipWidth;
 			})
 			.attr("height",function(){
@@ -368,7 +368,7 @@ function dataLoaded(CourseObject)
 			.style("position","absolute")
 			.style("z-index","99");	
 	
-			var TipStringII = "Need submit " +  BlueNumber + ",more Blue module" + ",and need submit " + GreenNumber + ",more Green module,in Level "+ (LevelNumber) + ",to unlock,the Level " + (LevelNumber+1);
+			var TipStringII = "Course Outcome of Modules" + ",Click any Modules on the right" + ",to see the details of"+",the Module."
 			var NewString = TipStringII.split(",");
 			
 //			var Hide = d3.select("#Tooltip")
@@ -386,6 +386,7 @@ function dataLoaded(CourseObject)
 			.style("font-size",function(){
 				var FontSize = document.getElementById("ModulePart").offsetWidth*0.014 + "px";
 //				console.log(FontSize);
+				FontLargeSize = FontSize;
 				return FontSize;				
 			})
 			
