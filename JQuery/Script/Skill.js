@@ -51,7 +51,7 @@ function CreateSvg()
 			return InforWidth + "px";
 		})
 		.attr("height",function(){
-			var InforHeight = windowHeight*0.18;
+			var InforHeight = windowHeight*0.25;
 			return InforHeight + "px";
 		})
 		.style("background-color",null)
@@ -63,7 +63,7 @@ function CreateSvg()
 		})
 		.style("margin-top",function()
 		{
-			var TopBlank = windowHeight*0.25;
+			var TopBlank = windowHeight*0.01;
 			return 0.35*TopBlank + "px";
 		})
 		.style("overflow","scroll");
@@ -118,8 +118,8 @@ function WriteTitle()
 	TitleInfo = d3.select('#Infosvg')
 	.append('text')
 	.attr("x",FontMarginLeft)
-	.attr("y",FontMargintop)
-	.text("Skill development")
+	.attr("y",0.5*FontMargintop)
+	.text("Skill Description")
 	.style("font-size",function(){
 		var FontSize = document.getElementById("Infosvg").offsetWidth*0.05;
 		return FontSize + "px";
@@ -136,7 +136,7 @@ function SkillDetail(ModuleName,SkillDetail)
 	.append('text')
 	.attr("id","SelectModuleName")
 	.attr("x",FontMarginLeft)
-	.attr("y",2*FontMargintop)
+	.attr("y",1.0*FontMargintop)
 	.text(function(){
 		if(ModuleName!=null)
 			{
@@ -161,9 +161,9 @@ function SkillDetail(ModuleName,SkillDetail)
 	.append('text')
 	.attr("id","SelectModuleSkill")
 	.attr("x",FontMarginLeft)
-	.attr("y",2.5*FontMargintop)
+	.attr("y",1.0*FontMargintop)
 	.style("font-size",function(){
-		var FontSize = document.getElementById("Infosvg").offsetWidth*0.02;
+		var FontSize = document.getElementById("Infosvg").offsetWidth*0.035;
 		return FontSize + "px";
 	});
 	
@@ -179,17 +179,40 @@ function SkillDetail(ModuleName,SkillDetail)
 				}
 		}
 	
+	var NewSkillsDesString = null;
+	var EachFontSize = document.getElementById("Infosvg").offsetWidth*0.035;
+	var MaxWidth = document.getElementById("Infosvg").offsetWidth;
+	var TemporarySaveString = null;
+	TemporarySaveString = "";
+	var JudgeChangeStringLine = null;
+	JudgeChangeStringLine = "";
+	var SaveNewString = null;
+	SaveNewString = "";
+	TemporarySaveString = SkillDesString.split(" ");
+	for(var i=0;i<TemporarySaveString.length-1;i++)
+		{
+			JudgeChangeStringLine = JudgeChangeStringLine + TemporarySaveString[i] + " ";
+			if(((JudgeChangeStringLine.length+TemporarySaveString[i+1].length)*EachFontSize)>(2*MaxWidth))
+				{
+					console.log(JudgeChangeStringLine);
+					SaveNewString = SaveNewString + JudgeChangeStringLine + ",";
+					JudgeChangeStringLine = "";
+				}
+		}
+	SaveNewString = SaveNewString + TemporarySaveString[TemporarySaveString.length];
+	console.log(SaveNewString);	
+	
 //	console.log(SkillDesString);
 	
 	var NewSkillDesString = null;
-	NewSkillDesString = SkillDesString.split(",");
+	NewSkillDesString = SaveNewString.split(",");
 	
 	SkillDes.selectAll("tspan")
 	.data(NewSkillDesString)
 	.enter()
 	.append("tspan")
 	.attr("x",FontMarginLeft)
-	.attr("dy","1.5em")
+	.attr("dy","1.2em")
 	.text(function(d){
 		return d;
 	})
@@ -207,15 +230,29 @@ function ModuleInformationDetail(ModuleName,ModuleDetail)
 	//Module describtion detail part----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //	console.log(ModuleName)
 	var ModuleDes = null;
-	ModuleDes = d3.select('#ModuleInfosvg')
+	
+	d3.select('#Tooltip2')
+	.text(function()
+	{
+		if(ModuleName!=null)
+			{
+				return "Course Outcome of: " + ModuleName;
+			}
+		else
+			{
+				return "";
+			}
+	})
+	
+	ModuleDes = d3.select('#Tooltip2')
 	.append('text')
 	.attr("id","RelevantModuleName")
 	.attr("x",FontMarginLeft)
-	.attr("y",0.4*FontMargintop)
+	.attr("y",50)
 	.text(function(){
 		if(ModuleName!=null)
 			{
-				return ModuleName + " Course Outcome:";
+				return "Course Outcome of: " + ModuleName;
 			}
 		else
 			{
@@ -223,7 +260,7 @@ function ModuleInformationDetail(ModuleName,ModuleDetail)
 			}
 	})
 	.style("font-size",function(){
-		var FontSize = document.getElementById("ModuleInfosvg").offsetWidth*0.04;
+		var FontSize = document.getElementById("Tooltip2").offsetWidth*0.05;
 		return FontSize + "px";
 	})
 	.style("opacity",0)
@@ -232,13 +269,13 @@ function ModuleInformationDetail(ModuleName,ModuleDetail)
 	.style("opacity",1);
 	
 	var ModuleDetailDes = null;
-	ModuleDetailDes = d3.select('#ModuleInfosvg')
+	ModuleDetailDes = d3.select('#Tooltip2')
 	.append('text')
 	.attr("id","SelectModuleDetail")
 	.attr("x",FontMarginLeft)
-	.attr("y",0.8*FontMargintop)
+	.attr("y",60)
 	.style("font-size",function(){
-		var FontSize = document.getElementById("ModuleInfosvg").offsetWidth*0.02;
+		var FontSize = document.getElementById("Tooltip2").offsetWidth*0.05;
 		return FontSize + "px";
 	});
 	
@@ -246,18 +283,42 @@ function ModuleInformationDetail(ModuleName,ModuleDetail)
 	ModuleDesString = "";
 	for(var i=0;i<ModuleDetail.length;i++)
 		{
-			ModuleDesString = ModuleDesString + ModuleDetail[i][0].outcome + ",";
+			ModuleDesString = ModuleDesString + ModuleDetail[i][0].outcome + ". ";
 		}
 	
 	var NewModuleDesString = null;
-	NewModuleDesString = ModuleDesString.split(",");
+	var EachFontSize = document.getElementById("Tooltip2").offsetWidth*0.05;
+	var MaxWidth = document.getElementById("Tooltip2").offsetWidth;
+	var TemporarySaveString = null;
+	TemporarySaveString = "";
+	var JudgeChangeStringLine = null;
+	JudgeChangeStringLine = "";
+	var SaveNewString = null;
+	SaveNewString = "";
+	TemporarySaveString = ModuleDesString.split(" ");
+	for(var i=0;i<TemporarySaveString.length-1;i++)
+		{
+			JudgeChangeStringLine = JudgeChangeStringLine + TemporarySaveString[i] + " ";
+			if(((JudgeChangeStringLine.length+TemporarySaveString[i+1].length)*EachFontSize)>(2*MaxWidth))
+				{
+					console.log(JudgeChangeStringLine);
+					SaveNewString = SaveNewString + JudgeChangeStringLine + ",";
+					JudgeChangeStringLine = "";
+				}
+		}
+	SaveNewString = SaveNewString + TemporarySaveString[TemporarySaveString.length];
+	console.log(SaveNewString);
+	
+	NewModuleDesString = SaveNewString.split(",");
+//	NewModuleDesString = splitByLine(ModuleDesString,MaxWidth,EachFontSize);
+	console.log(NewModuleDesString[0].length);
 	
 	ModuleDetailDes.selectAll("tspan")
 	.data(NewModuleDesString)
 	.enter()
 	.append("tspan")
 	.attr("x",FontMarginLeft)
-	.attr("dy","1.5em")
+	.attr("dy","1.2em")
 	.text(function(d){
 		return d;
 	})
@@ -270,40 +331,93 @@ function ModuleInformationDetail(ModuleName,ModuleDetail)
 //Skill information Detail--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function SkillInformationDetail(Skill)
 {
-	console.log(Skill);
-	var SkillDes = null;
-	SkillDes = d3.select('#ModuleInfosvg')
-	.append('text')
-	.attr("id","RelevantModuleName")
-	.attr("x",FontMarginLeft)
-	.attr("y",3.4 *FontMargintop)
-	.text(function(){
-		if(Skill.name!=null)
-			{
-				return Skill.name ;
-			}
-		else
-			{
-				return "";
-			}
-	})
-	.style("font-size",function(){
-		var FontSize = document.getElementById("ModuleInfosvg").offsetWidth*0.02;
-		return FontSize + "px";
-	})
-	.style("opacity",0)
-	.transition()
-	.duration(durationTime)
-	.style("opacity",1);
+//	console.log(Skill);
+//	var SkillDes = null;
+//	SkillDes = d3.select('#ModuleInfosvg')
+//	.append('text')
+//	.attr("id","RelevantModuleName")
+//	.attr("x",FontMarginLeft)
+//	.attr("y",0.5 *FontMargintop)
+////	.text(function(){
+////		if(Skill.name!=null)
+////			{
+////				return Skill.name ;
+////			}
+////		else
+////			{
+////				return "";
+////			}
+////	})
+//	.style("font-size",function(){
+//		var FontSize = document.getElementById("ModuleInfosvg").offsetWidth*0.035;
+//		return FontSize + "px";
+//	})
+//	.style("opacity",0)
+//	.transition()
+//	.duration(durationTime)
+//	.style("opacity",1);
+//	
+//	var SkillNameString = null;
+//	
+//	if(Skill.name!=null)
+//		{
+//			SkillNameString = Skill.name;
+//		}
+//	else
+//		{
+//			return "";
+//		}
+//	
+//	var SkillNameSplit = SkillNameString.split(" ");
+//	var NewSkillNameString = null;
+//	var SkillNameFontSize = document.getElementById("ModuleInfosvg").offsetWidth*0.035;
+//	var SkillNameMaxWidth = document.getElementById("ModuleInfosvg").offsetWidth;
+//	var SkillTemporarySaveString = null;
+//	SkillTemporarySaveString = "";
+//	var SkillJudgeChangeStringLine = null;
+//	SkillJudgeChangeStringLine = "";
+//	var SkillNameSaveNewString = null;
+//	SkillNameSaveNewString = "";
+//	SkillTemporarySaveString = SkillNameSplit;
+//	for(var i=0;i<SkillTemporarySaveString.length-1;i++)
+//		{
+//			SkillJudgeChangeStringLine = SkillJudgeChangeStringLine + SkillTemporarySaveString[i] + " ";
+//			if(((SkillJudgeChangeStringLine.length+SkillTemporarySaveString[i+1].length)*SkillNameFontSize)>(2*SkillNameMaxWidth))
+//				{
+//					console.log(SkillJudgeChangeStringLine);
+//					SkillNameSaveNewString = SkillNameSaveNewString + SkillJudgeChangeStringLine + ",";
+//					SkillJudgeChangeStringLine = "";
+//				}
+//		}
+//	SkillNameSaveNewString = SkillNameSaveNewString + SkillTemporarySaveString[SkillTemporarySaveString.length];
+//	console.log(SkillNameSaveNewString);	
+//	
+//	var SkillNameNewSkillDesString = null;
+//	SkillNameNewSkillDesString = SkillNameSaveNewString.split(",");	
+//	
+//	SkillDes.selectAll("tspan")
+//	.data(SkillNameNewSkillDesString)
+//	.enter()
+//	.append("tspan")
+//	.attr("x",FontMarginLeft)
+//	.attr("dy","1.2em")
+//	.text(function(d){
+//		return d;
+//	})
+//	.style("opacity",0)
+//	.transition()
+//	.duration(durationTime)
+//	.style("opacity",1);
+	
 	
 	var SkillDetailDes = null;
 	SkillDetailDes = d3.select('#ModuleInfosvg')
 	.append('text')
 	.attr("id","SelectModuleDetail")
 	.attr("x",FontMarginLeft)
-	.attr("y",3.8*FontMargintop)
+	.attr("y",0.2*FontMargintop)
 	.style("font-size",function(){
-		var FontSize = document.getElementById("ModuleInfosvg").offsetWidth*0.02;
+		var FontSize = document.getElementById("ModuleInfosvg").offsetWidth*0.04;
 		return FontSize + "px";
 	});
 	
@@ -314,15 +428,39 @@ function SkillInformationDetail(Skill)
 			SkillDesString = SkillDesString + Skill.SkillDetail[i].skill + ",";
 		}
 	
+	var NewSkillsDesString = null;
+	var EachFontSize = document.getElementById("ModuleInfosvg").offsetWidth*0.04;
+	var MaxWidth = document.getElementById("ModuleInfosvg").offsetWidth;
+	var TemporarySaveString = null;
+	TemporarySaveString = "";
+	var JudgeChangeStringLine = null;
+	JudgeChangeStringLine = "";
+	var SaveNewString = null;
+	SaveNewString = "";
+	TemporarySaveString = SkillDesString.split(" ");
+	console.log(TemporarySaveString);
+	for(var i=0;i<TemporarySaveString.length-1;i++)
+		{
+			JudgeChangeStringLine = JudgeChangeStringLine + TemporarySaveString[i] + " ";
+			if(((JudgeChangeStringLine.length+TemporarySaveString[i+1].length)*EachFontSize)>(2*MaxWidth))
+				{
+					console.log(JudgeChangeStringLine);
+					SaveNewString = SaveNewString + JudgeChangeStringLine + ",";
+					JudgeChangeStringLine = "";
+				}
+		}
+	SaveNewString = SaveNewString + TemporarySaveString[TemporarySaveString.length];
+	console.log(SaveNewString);	
+	
 	var NewSkillDesString = null;
-	NewSkillDesString = SkillDesString.split(",");
+	NewSkillDesString = SaveNewString.split(",");
 	
 	SkillDetailDes.selectAll("tspan")
 	.data(NewSkillDesString)
 	.enter()
 	.append("tspan")
 	.attr("x",FontMarginLeft)
-	.attr("dy","1.5em")
+	.attr("dy","1.2em")
 	.text(function(d){
 		return d;
 	})
@@ -661,4 +799,33 @@ function ResetSkillarrary(SkillArrary)
 			SkillArrary[i].Learned = false;
 		}
 	return null;
+}
+
+//SplitFontbyWidth----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function splitByLine(str,max,fontsize)
+{
+	var curLen = 0;
+	var result = [];
+	var start = 0, end = 0;
+	for(var i=0;i<str.length;i++)
+	{
+		var code = str.charCodeAt(i);
+		var pixelLen = code > 255 ? fontsize : fontsize/2;
+		curLen += pixelLen;
+		if(curLen > max)
+			{
+				end = i;
+				result.push(str.substring(start,end));
+				start = i;
+				curLen = pixelLen;
+			}
+		if( i === str.length - 1 )
+			{
+				end = i;
+				result.push(str.substring(start,end+1));
+			}
+				
+	}
+	
+	return result;
 }

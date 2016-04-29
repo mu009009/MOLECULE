@@ -25,9 +25,18 @@ html,body{
     position:absolute;
 	padding: 0px;
 }
+.col-md-1 {		
+     width: 3.6%;		
+     height: 100%;		
+     padding-top: 10px;		
+     padding-bottom: 15px;		
+ 	 margin-left: 0;		
+     background-color: rgb(51,51,51);		
+ 	 position: absolute;		
+}
 .col-md-2 {
-    width: 76%;
-	margin-left: 0%;
+    width: 72.4%;
+	margin-left: 3.6%;
 	background: white;
 	overflow:auto;
 	position: absolute;
@@ -42,8 +51,8 @@ html,body{
 	z-index: 5;
 }
 .col-md-4 {
-    width: 76%;
-	margin-left: 0%;
+    width: 72.4%;
+	margin-left: 3.6%;
 	background: white;
 	position: absolute;
 	z-index: 10;
@@ -72,5 +81,10 @@ html,body{
 .btn-arrow-right{
     position: relative;
 }
-
+.ProfileButton1{		
+ 	background-color: rgb(51,51,51);		
+ }		
+.ProfileButton2{		
+ 	background-color: rgb(133,133,133);		
+}
 
