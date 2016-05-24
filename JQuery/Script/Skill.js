@@ -47,7 +47,7 @@ function CreateSvg()
 		.append("svg")
 		.attr("id","Infosvg")
 		.attr("width",function(){
-			var InforWidth = document.getElementById("SkillPart").offsetWidth*1;
+			var InforWidth = document.getElementById("SkillPart").getBoundingClientRect().width*1;
 			return InforWidth + "px";
 		})
 		.attr("height",function(){
@@ -58,7 +58,7 @@ function CreateSvg()
 		.style("position","absolute")
 		.style("margin-left",function()
 		{
-			var LeftBlank = document.getElementById("SkillPart").offsetWidth*0.00;
+			var LeftBlank = document.getElementById("SkillPart").getBoundingClientRect().width*0.00;
 			return LeftBlank + "px";
 		})
 		.style("margin-top",function()
@@ -76,7 +76,7 @@ function CreateModuleSvg()
 		.append("svg")
 		.attr("id","ModuleInfosvg")
 		.attr("width",function(){
-			var InforWidth = document.getElementById("SkillPart").offsetWidth*1;
+			var InforWidth = document.getElementById("SkillPart").getBoundingClientRect().width*1;
 			return InforWidth + "px";
 		})
 		.attr("height",function(){
@@ -87,7 +87,7 @@ function CreateModuleSvg()
 		.style("position","absolute")
 		.style("margin-left",function()
 		{
-			var LeftBlank = document.getElementById("SkillPart").offsetWidth*0.00;
+			var LeftBlank = document.getElementById("SkillPart").getBoundingClientRect().width*0.00;
 			return LeftBlank + "px";
 		})
 		.style("margin-top",function()
@@ -100,8 +100,8 @@ function CreateModuleSvg()
 //Set the Font Margin-Top and the Margin-Left for Skill Part---------------------------------------------------------------------------------------------------------------------------------------------------------------
 function FontMarginTopAndLeft()
 {
-	FontMargintop = document.getElementById("Infosvg").offsetHeight*0.20;
-	FontMarginLeft = document.getElementById("Infosvg").offsetWidth*0.02;
+	FontMargintop = document.getElementById("Infosvg").getBoundingClientRect().height*0.20;
+	FontMarginLeft = document.getElementById("Infosvg").getBoundingClientRect().width*0.02;
 }
 
 //Delete the elder Svg when we draw the new Svg for Skill part--------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -121,7 +121,7 @@ function WriteTitle()
 	.attr("y",0.5*FontMargintop)
 	.text("Skill Description")
 	.style("font-size",function(){
-		var FontSize = document.getElementById("Infosvg").offsetWidth*0.05;
+		var FontSize = document.getElementById("Infosvg").getBoundingClientRect().width*0.05;
 		return FontSize + "px";
 	})
 }
@@ -148,7 +148,7 @@ function SkillDetail(ModuleName,SkillDetail)
 			}
 	})
 	.style("font-size",function(){
-		var FontSize = document.getElementById("Infosvg").offsetWidth*0.04;
+		var FontSize = document.getElementById("Infosvg").getBoundingClientRect().width*0.04;
 		return FontSize + "px";
 	})
 	.style("opacity",0)
@@ -163,7 +163,7 @@ function SkillDetail(ModuleName,SkillDetail)
 	.attr("x",FontMarginLeft)
 	.attr("y",1.0*FontMargintop)
 	.style("font-size",function(){
-		var FontSize = document.getElementById("Infosvg").offsetWidth*0.035;
+		var FontSize = document.getElementById("Infosvg").getBoundingClientRect().width*0.035;
 		return FontSize + "px";
 	});
 	
@@ -180,8 +180,8 @@ function SkillDetail(ModuleName,SkillDetail)
 		}
 	
 	var NewSkillsDesString = null;
-	var EachFontSize = document.getElementById("Infosvg").offsetWidth*0.035;
-	var MaxWidth = document.getElementById("Infosvg").offsetWidth;
+	var EachFontSize = document.getElementById("Infosvg").getBoundingClientRect().width*0.035;
+	var MaxWidth = document.getElementById("Infosvg").getBoundingClientRect().width;
 	var TemporarySaveString = null;
 	TemporarySaveString = "";
 	var JudgeChangeStringLine = null;
@@ -260,7 +260,7 @@ function ModuleInformationDetail(ModuleName,ModuleDetail)
 			}
 	})
 	.style("font-size",function(){
-		var FontSize = document.getElementById("Tooltip2").offsetWidth*0.05;
+		var FontSize = document.getElementById("Tooltip2").getBoundingClientRect().width*0.05;
 		return FontSize + "px";
 	})
 	.style("opacity",0)
@@ -275,7 +275,7 @@ function ModuleInformationDetail(ModuleName,ModuleDetail)
 	.attr("x",FontMarginLeft)
 	.attr("y",60)
 	.style("font-size",function(){
-		var FontSize = document.getElementById("Tooltip2").offsetWidth*0.05;
+		var FontSize = document.getElementById("Tooltip2").getBoundingClientRect().width*0.05;
 		return FontSize + "px";
 	});
 	
@@ -287,8 +287,8 @@ function ModuleInformationDetail(ModuleName,ModuleDetail)
 		}
 	
 	var NewModuleDesString = null;
-	var EachFontSize = document.getElementById("Tooltip2").offsetWidth*0.05;
-	var MaxWidth = document.getElementById("Tooltip2").offsetWidth;
+	var EachFontSize = document.getElementById("Tooltip2").getBoundingClientRect().width*0.05;
+	var MaxWidth = document.getElementById("Tooltip2").getBoundingClientRect().width;
 	var TemporarySaveString = null;
 	TemporarySaveString = "";
 	var JudgeChangeStringLine = null;
@@ -417,7 +417,8 @@ function SkillInformationDetail(Skill)
 	.attr("x",FontMarginLeft)
 	.attr("y",0.2*FontMargintop)
 	.style("font-size",function(){
-		var FontSize = document.getElementById("ModuleInfosvg").offsetWidth*0.04;
+//		var FontSize = document.getElementById("ModuleInfosvg").offsetWidth*0.04;
+		var FontSize = document.getElementById("ModuleInfosvg").getBoundingClientRect().width*0.04;
 		return FontSize + "px";
 	});
 	
@@ -429,8 +430,8 @@ function SkillInformationDetail(Skill)
 		}
 	
 	var NewSkillsDesString = null;
-	var EachFontSize = document.getElementById("ModuleInfosvg").offsetWidth*0.04;
-	var MaxWidth = document.getElementById("ModuleInfosvg").offsetWidth;
+	var EachFontSize = document.getElementById("ModuleInfosvg").getBoundingClientRect().width*0.04;
+	var MaxWidth = document.getElementById("ModuleInfosvg").getBoundingClientRect().width;
 	var TemporarySaveString = null;
 	TemporarySaveString = "";
 	var JudgeChangeStringLine = null;
@@ -478,7 +479,8 @@ function CreateGraphicSvg()
 		.append("svg")
 		.attr("id","Graphicsvg")
 		.attr("width",function(){
-			var InforWidth = document.getElementById("SkillPart").offsetWidth*0.96;
+//			var InforWidth = document.getElementById("SkillPart").offsetWidth*0.96;
+			var InforWidth = document.getElementById("SkillPart").getBoundingClientRect().width*0.96;
 			return InforWidth + "px";
 		})
 		.attr("height",function(){
@@ -489,7 +491,8 @@ function CreateGraphicSvg()
 		.style("position","absolute")
 		.style("margin-left",function()
 		{
-			var LeftBlank = document.getElementById("SkillPart").offsetWidth*0.00;
+//			var LeftBlank = document.getElementById("SkillPart").offsetWidth*0.00;
+			var LeftBlank = document.getElementById("SkillPart").getBoundingClientRect().width*0.00;
 			return LeftBlank + "px";
 		})
 		.style("margin-top",function()
@@ -518,12 +521,14 @@ function DrawLines()
 	.attr('y',0)
 	.attr('width',function()
 	{
-		var RectWidth = document.getElementById('Graphicsvg').offsetWidth*1;
+//		var RectWidth = document.getElementById('Graphicsvg').offsetWidth*1;
+		var RectWidth = document.getElementById('Graphicsvg').getBoundingClientRect().width*1;
 		return RectWidth + 'px';
 	})
 	.attr('height',function()
 	{
-		var RectHeigh = document.getElementById('Graphicsvg').offsetHeight*0.005;
+//		var RectHeigh = document.getElementById('Graphicsvg').offsetHeight*0.005;
+		var RectHeigh = document.getElementById('Graphicsvg').getBoundingClientRect().height*0.005;
 		return RectHeigh + 'px';
 	})
 	.attr('fill','black');
@@ -532,18 +537,21 @@ function DrawLines()
 	.append('rect')
 	.attr('x',function()
 	{
-		var RectWidth = document.getElementById('Graphicsvg').offsetWidth*0.5;
+//		var RectWidth = document.getElementById('Graphicsvg').offsetWidth*0.5;
+		var RectWidth = document.getElementById('Graphicsvg').getBoundingClientRect().width*0.5;
 		return RectWidth + 'px';
 	})
 	.attr('y',0)
 	.attr('width',function()
 	{
-		var RectWidth = document.getElementById('Graphicsvg').offsetWidth*0.005;
+//		var RectWidth = document.getElementById('Graphicsvg').offsetWidth*0.005;
+		var RectWidth = document.getElementById('Graphicsvg').getBoundingClientRect().width*0.005;
 		return RectWidth + 'px';
 	})
 	.attr('height',function()
 	{
-		var RectHeigh = document.getElementById('Graphicsvg').offsetHeight*1;
+//		var RectHeigh = document.getElementById('Graphicsvg').offsetHeight*1;
+		var RectHeigh = document.getElementById('Graphicsvg').getBoundingClientRect().height*1;
 		return RectHeigh + 'px';
 	})
 	.attr('fill','black');	
@@ -608,14 +616,19 @@ function DrawCircles(SkillArrary)
 	circleYMaxnumber = 12;
 	circleXMaxnumber = 12;
 	
-	topBlank = document.getElementById("Graphicsvg").offsetHeight*0.01;
-	circleR = (document.getElementById("Graphicsvg").offsetHeight-2*topBlank)/(4*circleYMaxnumber-2);
+//	topBlank = document.getElementById("Graphicsvg").offsetHeight*0.01;	
+	topBlank = document.getElementById("Graphicsvg").getBoundingClientRect().height*0.01;
+//	circleR = (document.getElementById("Graphicsvg").offsetHeight-2*topBlank)/(4*circleYMaxnumber-2);	
+	circleR = (document.getElementById("Graphicsvg").getBoundingClientRect().height-2*topBlank)/(4*circleYMaxnumber-2);
 	LeftYlineNumber = 1;
 	LeftXlineNumber = 1;
 	RightlineNumber = 1;
 	CirclenumberYRecord = 0;
 	CirclenumberXRecord = 0;
-	Yblank = document.getElementById("Graphicsvg").offsetWidth*0.5;
+//	Yblank = document.getElementById("Graphicsvg").offsetWidth*0.5;
+	Yblank = document.getElementById("Graphicsvg").getBoundingClientRect().width*0.5;
+	
+	console.log(Yblank);
 	
 	var DrawcirclesbyData = null;
 	DrawcirclesbyData = d3.select('#Graphicsvg')
@@ -755,13 +768,13 @@ function CheckAndChangeCircle(SkillArrary)
 function ChangeCirclePosition(ID)
 {
 	var topBlank = null;
-	topBlank = document.getElementById("Graphicsvg").offsetHeight*0.01;
+	topBlank = document.getElementById("Graphicsvg").getBoundingClientRect().height*0.01;
 	
 	var Yblank = null;
-	Yblank = document.getElementById("Graphicsvg").offsetWidth*0.5;
+	Yblank = document.getElementById("Graphicsvg").getBoundingClientRect().width*0.5;
 	
 	var circleR = null;
-	circleR = (document.getElementById("Graphicsvg").offsetHeight-2*topBlank)/(4*CircleMaxNumberforR-2);
+	circleR = (document.getElementById("Graphicsvg").getBoundingClientRect().height-2*topBlank)/(4*CircleMaxNumberforR-2);
 	
 	d3.select(('#circle'+ ID))
 	.transition()
