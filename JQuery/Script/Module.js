@@ -19,11 +19,11 @@ durationTime = 500;
 //Load the data about Module;
 function ModuleDataLoad(CourseObject)
 {
-//	queue()
-//	.defer(d3.csv,'data/CSV File/LevelInfo.csv',parseLevle)
-//	.await(dataLoaded);
-	dataLoaded(CourseObject);
-	return null;
+	queue()
+	.defer(d3.csv,'data/CSV File/LevelInfo.csv',parseLevle)
+	.await(dataLoaded);
+//	dataLoaded(CourseObject);
+//	return null;
 }
 
 //Controling the data-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
